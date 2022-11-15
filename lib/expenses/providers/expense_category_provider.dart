@@ -9,6 +9,12 @@ class ExpenseCategoryProvider extends ChangeNotifier {
 
   List<ExpenseCategoryModel> allExpenseCategories = [];
   TextEditingController textController = TextEditingController();
+  ExpenseCategoryModel? expCategory;
+
+  updateCategory(ExpenseCategoryModel expCategoryId) {
+    this.expCategory = expCategoryId;
+    notifyListeners();
+  }
 
   getExpenseCategories() async {
     allExpenseCategories =
@@ -20,7 +26,8 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   insertExpenseCategor() async {
     ExpenseCategoryModel expenseCategory =
         ExpenseCategoryModel(name: textController.text);
-    await ExpCatDBHelper.expCatDBHelper.insertNewTask(expenseCategory);
+    await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
+    textController.text = '';
     getExpenseCategories();
   }
 }

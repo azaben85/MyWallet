@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
+import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/screens/my_wallet_main_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -15,11 +16,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ExpenseCategoryProvider>(
+    return MultiProvider(providers: [
+      ChangeNotifierProvider<ExpenseCategoryProvider>(
         create: (context) {
           return ExpenseCategoryProvider();
         },
-        child: InitialApp());
+      ),
+      ChangeNotifierProvider<ExpenseHeaderProvider>(
+        create: (context) {
+          return ExpenseHeaderProvider();
+        },
+      ),
+    ], child: InitialApp());
   }
 }
 

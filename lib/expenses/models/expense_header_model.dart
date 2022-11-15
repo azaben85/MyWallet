@@ -4,7 +4,7 @@ import 'package:my_wallet/expenses/models/expense_line_model.dart';
 import 'package:my_wallet/helper/util.dart';
 
 class ExpenseHeaderModel {
-  int id;
+  int? id;
   String expenseName;
   num amount;
   bool autoBill;
@@ -13,7 +13,7 @@ class ExpenseHeaderModel {
   int categoryId;
   List<ExpenseLineModel>? expenseLinesModelList;
   ExpenseHeaderModel({
-    required this.id,
+    this.id,
     required this.expenseName,
     required this.amount,
     required this.autoBill,
@@ -25,7 +25,7 @@ class ExpenseHeaderModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      DBHelper.dbHelper.expenseHeaderDDL.idColumn: id,
+      //  DBHelper.dbHelper.expenseHeaderDDL.idColumn: id,
       DBHelper.dbHelper.expenseHeaderDDL.expenseNameColumn: expenseName,
       DBHelper.dbHelper.expenseHeaderDDL.amountColumn: amount,
       DBHelper.dbHelper.expenseHeaderDDL.autoBillColumn: boolToInt(autoBill),

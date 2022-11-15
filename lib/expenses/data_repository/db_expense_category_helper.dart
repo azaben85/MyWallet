@@ -17,14 +17,16 @@ class ExpCatDBHelper {
     return data.map((e) => ExpenseCategoryModel.fromMap(e)).toList();
   }
 
-  Future<int> insertNewTask(ExpenseCategoryModel expenseCategoryModel) async {
+  Future<int> insertNewExpCategory(
+      ExpenseCategoryModel expenseCategoryModel) async {
     Database database = DBHelper.dbHelper.database!;
     int id = await database
         .insert(table.tableName, {table.nameColumn: expenseCategoryModel.name});
     return id;
   }
 
-  Future<int> updateNewTask(ExpenseCategoryModel expenseCategoryModel) async {
+  Future<int> updateExpCategory(
+      ExpenseCategoryModel expenseCategoryModel) async {
     Database database = DBHelper.dbHelper.database!;
 
     int updatedCount = await database.update(

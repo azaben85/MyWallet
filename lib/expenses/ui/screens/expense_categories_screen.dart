@@ -14,7 +14,7 @@ class ExpesnseCategories extends StatelessWidget {
         title: Text('Expenses'),
         actions: [
           InkWell(
-            child: Icon(Icons.add),
+            child: SizedBox(width: 52, height: 52, child: Icon(Icons.add)),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
@@ -27,11 +27,13 @@ class ExpesnseCategories extends StatelessWidget {
       ),
       body: Consumer<ExpenseCategoryProvider>(
           builder: (context, provider, child) {
-        return ListView.builder(
+        return GridView.builder(
           itemCount: provider.allExpenseCategories.length,
           itemBuilder: (context, index) {
             return ExpenseCategoryWidget(provider.allExpenseCategories[index]);
           },
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
         );
       }),
     );
