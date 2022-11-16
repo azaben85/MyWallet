@@ -13,7 +13,6 @@ class ExpHeaderDBHelper {
   Future<List<ExpenseHeaderModel>> getAllExpHeaders(
       {int expCategoryId = -1}) async {
     List<Map<String, dynamic>> data;
-    print('expCategoryId SQL = $expCategoryId');
     if (expCategoryId == -1) {
       data = await DBHelper.dbHelper.database!.query(table.tableName);
     } else {

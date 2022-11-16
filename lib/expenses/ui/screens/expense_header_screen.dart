@@ -11,8 +11,8 @@ class ExpesnseHeaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ExpenseCategoryProvider, ExpenseHeaderProvider>(
-        builder: (context, catProvider, eHeaderProvider, child) {
+    return Consumer<ExpenseHeaderProvider>(
+        builder: (context, eHeaderProvider, child) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Expenses'),
@@ -32,7 +32,8 @@ class ExpesnseHeaderScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            ExpenseCategoryWidget(catProvider.expCategory!),
+            ExpenseCategoryWidget(eHeaderProvider.expCategory!,
+                allowNavigate: false),
             Expanded(
               child: GridView.builder(
                 itemCount: eHeaderProvider.allExpenseHeader.length,
@@ -40,7 +41,7 @@ class ExpesnseHeaderScreen extends StatelessWidget {
                   return ExpenseHeaderWidget(
                       eHeaderProvider.allExpenseHeader[index]);
                 },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4),
               ),
             )

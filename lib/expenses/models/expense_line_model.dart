@@ -1,14 +1,13 @@
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ExpenseLineModel {
-  int id;
+  int? id;
   num subAmount;
   String duedate;
   int headerId;
 
   ExpenseLineModel({
-    required this.id,
+    this.id,
     required this.subAmount,
     required this.duedate,
     required this.headerId,
@@ -19,7 +18,6 @@ class ExpenseLineModel {
       DBHelper.dbHelper.expenseLinesDDL.idColumn: id,
       DBHelper.dbHelper.expenseLinesDDL.subAmountColumn: subAmount,
       DBHelper.dbHelper.expenseLinesDDL.duedateColumn: duedate,
-      DBHelper.dbHelper.expenseLinesDDL.headerIdColumn: headerId,
     };
   }
 
