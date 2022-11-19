@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
+import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
+import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen.dart';
+import 'package:my_wallet/expenses/expense_header/ui/widgets/expense_header_widget.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
-import 'package:my_wallet/expenses/ui/screens/expense_header_add_screen.dart';
-import 'package:my_wallet/expenses/ui/widgets/expense_category_widget.dart';
-import 'package:my_wallet/expenses/ui/widgets/expense_header_widget.dart';
 import 'package:provider/provider.dart';
 
 class ExpesnseHeaderScreen extends StatelessWidget {

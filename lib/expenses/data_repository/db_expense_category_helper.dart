@@ -1,6 +1,6 @@
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
-import 'package:my_wallet/expenses/models/expense_category_model.dart';
+import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpCatDBHelper {

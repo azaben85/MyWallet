@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
@@ -44,13 +46,18 @@ class InitialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      // theme: Provider.of<ToDoClassProvider>(context).isDarkMode
-      //     ? ThemeData.dark()
-      //     : ThemeData.light(),
-      debugShowCheckedModeBanner: false,
-      title: 'My Wallet',
-      home: MyWalletMainScreen(),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(390, 844),
+        builder: (BuildContext context, Widget? child) {
+          return MaterialApp(
+            navigatorKey: AppRouter.appRouter.navigatorKey,
+            // theme: Provider.of<ToDoClassProvider>(context).isDarkMode
+            //     ? ThemeData.dark()
+            //     : ThemeData.light(),
+            debugShowCheckedModeBanner: false,
+            title: 'My Wallet',
+            home: MyWalletMainScreen(),
+          );
+        });
   }
 }

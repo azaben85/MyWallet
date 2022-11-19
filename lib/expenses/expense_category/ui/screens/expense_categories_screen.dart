@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/expenses/expense_category/ui/screens/expense_category_add_screen.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
-import 'package:my_wallet/expenses/ui/screens/expense_category_add_screen.dart';
-import 'package:my_wallet/expenses/ui/widgets/expense_category_widget.dart';
+import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
 import 'package:provider/provider.dart';
 
 class ExpesnseCategories extends StatelessWidget {
@@ -11,10 +11,11 @@ class ExpesnseCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expenses'),
+        title: const Text('Expenses'),
         actions: [
           InkWell(
-            child: SizedBox(width: 52, height: 52, child: Icon(Icons.add)),
+            child:
+                const SizedBox(width: 52, height: 52, child: Icon(Icons.add)),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
@@ -27,13 +28,11 @@ class ExpesnseCategories extends StatelessWidget {
       ),
       body: Consumer<ExpenseCategoryProvider>(
           builder: (context, provider, child) {
-        return GridView.builder(
+        return ListView.builder(
           itemCount: provider.allExpenseCategories.length,
           itemBuilder: (context, index) {
             return ExpenseCategoryWidget(provider.allExpenseCategories[index]);
           },
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
         );
       }),
     );

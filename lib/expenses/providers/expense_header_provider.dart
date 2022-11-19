@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_header_helper.dart';
-import 'package:my_wallet/expenses/models/expense_category_model.dart';
-import 'package:my_wallet/expenses/models/expense_header_model.dart';
+import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
+import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
 
 class ExpenseHeaderProvider extends ChangeNotifier {
   ExpenseHeaderProvider() {

@@ -1,6 +1,6 @@
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
-import 'package:my_wallet/expenses/models/expense_header_model.dart';
+import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpHeaderDBHelper {

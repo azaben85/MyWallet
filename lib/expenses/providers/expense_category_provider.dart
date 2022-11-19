@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_category_helper.dart';
-import 'package:my_wallet/expenses/models/expense_category_model.dart';
+import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
 
 class ExpenseCategoryProvider extends ChangeNotifier {
   ExpenseCategoryProvider() {
     getExpenseCategories();
   }
+  GlobalKey<FormState> expenseCatKey = GlobalKey<FormState>();
 
   List<ExpenseCategoryModel> allExpenseCategories = [];
   TextEditingController textController = TextEditingController();
+  String? categoryName;
   ExpenseCategoryModel? expCategory;
 
-  updateCategory(ExpenseCategoryModel expCategoryId) {
-    this.expCategory = expCategoryId;
-    notifyListeners();
+  setCategoryName(String categoryName) {
+    this.categoryName = categoryName;
+  }
+
+  String? validateCategoryName(String? categoryName) {
+    if (categoryName == null || categoryName.isEmpty) {
+      return 'Must have value';
+    }
+    return null;
   }
 
   getExpenseCategories() async {
@@ -24,10 +33,14 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   }
 
   insertExpenseCategor() async {
-    ExpenseCategoryModel expenseCategory =
-        ExpenseCategoryModel(name: textController.text);
-    await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
-    textController.text = '';
-    getExpenseCategories();
+    if (expenseCatKey.currentState!.validate()) {
+      expenseCatKey.currentState!.save();
+      ExpenseCategoryModel expenseCategory =
+          ExpenseCategoryModel(name: categoryName);
+      await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
+      categoryName = '';
+      getExpenseCategories();
+      AppRouter.appRouter.pop();
+    }
   }
 }

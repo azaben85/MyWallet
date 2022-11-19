@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_wallet/expenses/models/expense_header_model.dart';
+import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:my_wallet/expenses/ui/screens/expense_header_line_screen.dart';
 import 'package:provider/provider.dart';
