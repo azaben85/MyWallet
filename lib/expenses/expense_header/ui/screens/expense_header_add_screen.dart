@@ -20,7 +20,7 @@ class AddExpenseHeader extends StatelessWidget {
               children: [
                 const Text('Auto Bill'),
                 Checkbox(
-                  value: provider.autoBill,
+                  value: provider.inBank,
                   onChanged: (value) {
                     provider.setAutoBill(value!);
                   },

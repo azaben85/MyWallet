@@ -12,6 +12,7 @@ class DBHelper {
 
   static DBHelper dbHelper = DBHelper._();
 
+  bool dropMode = false;
   ExpenseLinesDDL expenseLinesDDL = ExpenseLinesDDL();
   ExpenseHeaderDDL expenseHeaderDDL = ExpenseHeaderDDL();
   ExpenseCategoryDDL expenseCategoryDDL = ExpenseCategoryDDL();
@@ -39,7 +40,7 @@ class DBHelper {
           ${expenseLinesDDL.idColumn} INTEGER  primary key autoincrement , 
           ${expenseLinesDDL.headerIdColumn} INTEGER,
           ${expenseLinesDDL.subAmountColumn} REAL,
-            ${expenseLinesDDL.duedateColumn} TEXT 
+            ${expenseLinesDDL.duedateColumn} TEXT
         )
       ''');
 
@@ -49,7 +50,8 @@ class DBHelper {
           ${expenseHeaderDDL.expenseNameColumn} TEXT,
           ${expenseHeaderDDL.amountColumn} REAL,
             ${expenseHeaderDDL.categoryIdColumn} INTEGER,
-            ${expenseHeaderDDL.autoBillColumn} INTEGER,
+            ${expenseHeaderDDL.inBankColumn} INTEGER,
+            ${expenseHeaderDDL.expenseDescColumn} TEXT,
             ${expenseHeaderDDL.startDateColumn} TEXT,
             ${expenseHeaderDDL.endDateColumn} TEXT
         )
@@ -58,16 +60,27 @@ class DBHelper {
     createTable(expenseCategoryDDL.tableName, ''' 
         CREATE TABLE ${expenseCategoryDDL.tableName} (
           ${expenseCategoryDDL.idColumn} INTEGER  primary key autoincrement , 
-          ${expenseCategoryDDL.nameColumn} TEXT 
+          ${expenseCategoryDDL.nameColumn} TEXT,
+          ${expenseCategoryDDL.instantColumn} int
         )
       ''');
   }
 
   createTable(String tableName, String ddl) async {
     int exists = await checkIfTableExists(tableName);
+    if (exists > 0) {
+      await dropTable(tableName);
+    }
     if (exists == 0) {
       await database!.execute(ddl);
       log('$tableName was created');
+    }
+  }
+
+  dropTable(String tableName) async {
+    if (dropMode) {
+      await database!.execute('''drop table $tableName''');
+      log('$tableName was DROPPED');
     }
   }
 

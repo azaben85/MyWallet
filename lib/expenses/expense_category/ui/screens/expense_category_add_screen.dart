@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:my_wallet/components/custom_textformfield.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
-import 'package:provider/provider.dart';
 
 class AddExpenseCategory extends StatelessWidget {
   @override
@@ -20,6 +22,9 @@ class AddExpenseCategory extends StatelessWidget {
                   validation: provider.validateCategoryName,
                   onSave: provider.setCategoryName,
                   label: 'Expense Category'),
+              CustomCheckBoxTile(
+                  value: provider.instantType ?? false,
+                  onChanged: provider.setInstantType),
               ElevatedButton(
                   onPressed: () {
                     provider.insertExpenseCategor();
@@ -30,5 +35,24 @@ class AddExpenseCategory extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class CustomCheckBoxTile extends StatelessWidget {
+  Function onChanged;
+  bool value;
+  CustomCheckBoxTile({
+    Key? key,
+    required this.onChanged,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+      title: const Text('Instant Expense'),
+      value: value,
+      onChanged: (value) => onChanged(value),
+    );
   }
 }

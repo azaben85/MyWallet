@@ -31,12 +31,12 @@ class ExpenseCategoryWidget extends StatelessWidget {
 }
 
 class IntExpenseCatWidget extends StatelessWidget {
-  const IntExpenseCatWidget({
+  IntExpenseCatWidget({
     super.key,
     required this.expenseCategory,
   });
 
-  final ExpenseCategoryModel expenseCategory;
+  ExpenseCategoryModel expenseCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,7 @@ class IntExpenseCatWidget extends StatelessWidget {
             width: 12.w,
           ),
           Text(expenseCategory.name!),
+          Text('  ${expenseCategory.instant!.toString()}')
         ],
       )),
     );

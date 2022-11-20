@@ -24,13 +24,17 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     getExpenseHeader();
   }
 
+  GlobalKey<FormState> expenseHeaderKey = GlobalKey<FormState>();
+
+  String? headerName;
+  String? headerDesc;
+  bool inBank = false;
   TextEditingController nameTextController = TextEditingController();
   TextEditingController amountTextController = TextEditingController();
-  bool autoBill = false;
   TextEditingController endDateTextController = TextEditingController();
   TextEditingController startDateTextController = TextEditingController();
   setAutoBill(bool value) {
-    autoBill = value;
+    inBank = value;
     notifyListeners();
   }
 
@@ -38,7 +42,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     ExpenseHeaderModel expenseHeader = ExpenseHeaderModel(
         expenseName: nameTextController.text,
         amount: double.parse(amountTextController.text),
-        autoBill: autoBill,
+        inBank: inBank,
         categoryId: expCategory!.id!,
         endDate: endDateTextController.text,
         startDate: startDateTextController.text);
@@ -47,7 +51,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     amountTextController.text = '';
     endDateTextController.text = '';
     startDateTextController.text = '';
-    autoBill = false;
+    inBank = false;
     getExpenseHeader();
   }
 }

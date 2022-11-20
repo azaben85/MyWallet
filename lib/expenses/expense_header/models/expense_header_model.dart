@@ -6,8 +6,9 @@ import 'package:my_wallet/helper/util.dart';
 class ExpenseHeaderModel {
   int? id;
   String expenseName;
+  String? expenseDesc;
   num amount;
-  bool autoBill;
+  bool inBank;
   String startDate;
   String endDate;
   int categoryId;
@@ -15,11 +16,12 @@ class ExpenseHeaderModel {
   ExpenseHeaderModel({
     this.id,
     required this.expenseName,
+    this.expenseDesc = '',
     required this.amount,
-    required this.autoBill,
     required this.startDate,
     required this.endDate,
     required this.categoryId,
+    this.inBank = false,
     this.expenseLinesModelList,
   });
 
@@ -27,8 +29,9 @@ class ExpenseHeaderModel {
     return <String, dynamic>{
       //  DBHelper.dbHelper.expenseHeaderDDL.idColumn: id,
       DBHelper.dbHelper.expenseHeaderDDL.expenseNameColumn: expenseName,
+      DBHelper.dbHelper.expenseHeaderDDL.expenseDescColumn: expenseDesc,
       DBHelper.dbHelper.expenseHeaderDDL.amountColumn: amount,
-      DBHelper.dbHelper.expenseHeaderDDL.autoBillColumn: boolToInt(autoBill),
+      DBHelper.dbHelper.expenseHeaderDDL.inBankColumn: boolToInt(inBank),
       DBHelper.dbHelper.expenseHeaderDDL.startDateColumn: startDate,
       DBHelper.dbHelper.expenseHeaderDDL.endDateColumn: endDate,
       DBHelper.dbHelper.expenseHeaderDDL.categoryIdColumn: categoryId,
@@ -39,10 +42,12 @@ class ExpenseHeaderModel {
     return ExpenseHeaderModel(
         id: map[DBHelper.dbHelper.expenseHeaderDDL.idColumn] as int,
         expenseName:
+            map[DBHelper.dbHelper.expenseHeaderDDL.expenseDescColumn] as String,
+        expenseDesc:
             map[DBHelper.dbHelper.expenseHeaderDDL.expenseNameColumn] as String,
         amount: map[DBHelper.dbHelper.expenseHeaderDDL.amountColumn] as num,
-        autoBill: intToBool(
-            map[DBHelper.dbHelper.expenseHeaderDDL.autoBillColumn] as int),
+        inBank: intToBool(
+            map[DBHelper.dbHelper.expenseHeaderDDL.inBankColumn] as int),
         startDate:
             map[DBHelper.dbHelper.expenseHeaderDDL.startDateColumn] as String,
         endDate:

@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:my_wallet/components/custom_appbar.dart';
 
 class CustomScaffold extends StatelessWidget {
-  String title;
+  Widget? title;
+  Widget? bottomAppBar;
   Widget? body;
   CustomScaffold({
     Key? key,
-    required this.title,
+    this.title,
     this.body,
+    this.bottomAppBar,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(title: title, bottomAppBar: bottomAppBar),
       body: body,
     );
   }

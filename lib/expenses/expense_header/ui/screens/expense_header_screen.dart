@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/components/custom_scaffold.dart';
 import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen.dart';
 import 'package:my_wallet/expenses/expense_header/ui/widgets/expense_header_widget.dart';
@@ -14,7 +15,8 @@ class ExpesnseHeaderScreen extends StatelessWidget {
         builder: (context, eHeaderProvider, child) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Expenses'),
+          title: Text(eHeaderProvider.expCategory!.name!,
+              style: TextStyle(color: Colors.white)),
           actions: [
             InkWell(
               child:

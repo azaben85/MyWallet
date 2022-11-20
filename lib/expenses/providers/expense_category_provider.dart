@@ -10,12 +10,17 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   GlobalKey<FormState> expenseCatKey = GlobalKey<FormState>();
 
   List<ExpenseCategoryModel> allExpenseCategories = [];
-  TextEditingController textController = TextEditingController();
   String? categoryName;
+  bool? instantType = false;
   ExpenseCategoryModel? expCategory;
 
   setCategoryName(String categoryName) {
     this.categoryName = categoryName;
+  }
+
+  setInstantType(bool instantType) {
+    this.instantType = instantType;
+    notifyListeners();
   }
 
   String? validateCategoryName(String? categoryName) {
@@ -36,9 +41,10 @@ class ExpenseCategoryProvider extends ChangeNotifier {
     if (expenseCatKey.currentState!.validate()) {
       expenseCatKey.currentState!.save();
       ExpenseCategoryModel expenseCategory =
-          ExpenseCategoryModel(name: categoryName);
+          ExpenseCategoryModel(name: categoryName, instant: instantType);
       await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
       categoryName = '';
+      instantType = false;
       getExpenseCategories();
       AppRouter.appRouter.pop();
     }

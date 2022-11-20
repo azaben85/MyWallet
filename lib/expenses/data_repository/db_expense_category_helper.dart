@@ -20,8 +20,8 @@ class ExpCatDBHelper {
   Future<int> insertNewExpCategory(
       ExpenseCategoryModel expenseCategoryModel) async {
     Database database = DBHelper.dbHelper.database!;
-    int id = await database
-        .insert(table.tableName, {table.nameColumn: expenseCategoryModel.name});
+    int id =
+        await database.insert(table.tableName, expenseCategoryModel.toMap());
     return id;
   }
 
