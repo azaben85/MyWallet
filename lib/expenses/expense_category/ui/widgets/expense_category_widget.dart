@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
+import 'package:my_wallet/expenses/expense_category/ui/screens/expense_category_add_screen.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_screen.dart';
+import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/widgets/image_assets/expense_image_asset.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,20 +16,35 @@ class ExpenseCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return allowNavigate
-        ? InkWell(
-            child: IntExpenseCatWidget(expenseCategory: expenseCategory),
-            onTap: () {
-              Provider.of<ExpenseHeaderProvider>(context, listen: false)
-                  .updateCategoryModel(expenseCategory);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) {
-                  return const ExpesnseHeaderScreen();
-                },
-              ));
-            },
+    if (allowNavigate) {
+      return Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              child: IntExpenseCatWidget(expenseCategory: expenseCategory),
+              onTap: () {
+                Provider.of<ExpenseHeaderProvider>(context, listen: false)
+                    .updateCategoryModel(expenseCategory);
+                AppRouter.appRouter.push(const ExpesnseHeaderScreen());
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 28.w),
+            child: InkWell(
+              child: const Icon(Icons.edit),
+              onTap: () {
+                Provider.of<ExpenseCategoryProvider>(context, listen: false)
+                    .loadDataForUpdate(expenseCategory);
+                AppRouter.appRouter.push(AddExpenseCategory());
+              },
+            ),
           )
-        : IntExpenseCatWidget(expenseCategory: expenseCategory);
+        ],
+      );
+    } else {
+      return IntExpenseCatWidget(expenseCategory: expenseCategory);
+    }
   }
 }
 
@@ -42,7 +60,7 @@ class IntExpenseCatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 88.h,
-      margin: EdgeInsets.only(left: 28.w, right: 28.w),
+      margin: EdgeInsets.only(left: 28.w),
       decoration: const BoxDecoration(
           //  borderRadius: BorderRadius.circular(20),
           border: Border(bottom: BorderSide(color: Colors.grey, width: 1.0))),
@@ -54,7 +72,6 @@ class IntExpenseCatWidget extends StatelessWidget {
             width: 12.w,
           ),
           Text(expenseCategory.name!),
-          Text('  ${expenseCategory.instant!.toString()}')
         ],
       )),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_header_helper.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
@@ -27,31 +28,47 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   GlobalKey<FormState> expenseHeaderKey = GlobalKey<FormState>();
 
   String? headerName;
+
   String? headerDesc;
-  bool inBank = false;
-  TextEditingController nameTextController = TextEditingController();
-  TextEditingController amountTextController = TextEditingController();
-  TextEditingController endDateTextController = TextEditingController();
-  TextEditingController startDateTextController = TextEditingController();
-  setAutoBill(bool value) {
+  bool? inBank;
+
+  setHeaderName(String headerName) {
+    this.headerName = headerName;
+  }
+
+  setHeaderDesc(String? headerDesc) {
+    this.headerDesc = headerDesc;
+  }
+
+  setInBank(bool value) {
     inBank = value;
     notifyListeners();
   }
 
+  String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Must have value';
+    }
+    return null;
+  }
+
   insertExpenseHeader() async {
-    ExpenseHeaderModel expenseHeader = ExpenseHeaderModel(
-        expenseName: nameTextController.text,
-        amount: double.parse(amountTextController.text),
-        inBank: inBank,
-        categoryId: expCategory!.id!,
-        endDate: endDateTextController.text,
-        startDate: startDateTextController.text);
-    await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
-    nameTextController.text = '';
-    amountTextController.text = '';
-    endDateTextController.text = '';
-    startDateTextController.text = '';
-    inBank = false;
-    getExpenseHeader();
+    if (expenseHeaderKey.currentState!.validate()) {
+      expenseHeaderKey.currentState!.save();
+      ExpenseHeaderModel expenseHeader = ExpenseHeaderModel(
+          expenseName: headerName ?? '',
+          expenseDesc: headerDesc ?? '',
+          amount: 0.0,
+          inBank: inBank ?? false,
+          categoryId: expCategory!.id!,
+          endDate: '',
+          startDate: '');
+      await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
+      headerName = '';
+      headerDesc = '';
+      inBank = false;
+      getExpenseHeader();
+      AppRouter.appRouter.pop();
+    }
   }
 }

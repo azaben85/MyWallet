@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/components/custom_customcheckboxtile.dart';
+import 'package:my_wallet/components/custom_textformfield.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,36 +12,26 @@ class AddExpenseHeader extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Add Expense Type'),
         ),
-        body: ListView(
-          children: [
-            TextFormField(
-              controller: provider.nameTextController,
-              decoration: const InputDecoration(label: Text('Expense Type')),
-            ),
-            Row(
-              children: [
-                const Text('Auto Bill'),
-                Checkbox(
-                  value: provider.inBank,
-                  onChanged: (value) {
-                    provider.setAutoBill(value!);
+        body: Form(
+          key: provider.expenseHeaderKey,
+          child: ListView(
+            children: [
+              CustomTextField(
+                  validation: provider.validateName,
+                  onSave: provider.setHeaderName,
+                  label: 'Title'),
+              CustomCheckBoxTile(
+                label: 'In Bank',
+                value: provider.inBank ?? false,
+                onChanged: provider.setInBank,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    provider.insertExpenseHeader();
                   },
-                ),
-              ],
-            ),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              controller: provider.amountTextController,
-              decoration: const InputDecoration(label: Text('Amount')),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Provider.of<ExpenseHeaderProvider>(context, listen: false)
-                      .insertExpenseHeader();
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Add New Expense'))
-          ],
+                  child: const Text('Add New Expense'))
+            ],
+          ),
         ),
       );
     });

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
@@ -30,7 +32,7 @@ class ExpCatDBHelper {
     Database database = DBHelper.dbHelper.database!;
 
     int updatedCount = await database.update(
-        table.tableName, {table.nameColumn: expenseCategoryModel.name},
+        table.tableName, expenseCategoryModel.toMap(),
         where: 'id=?', whereArgs: [expenseCategoryModel.id]);
     return updatedCount;
   }

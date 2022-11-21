@@ -12,6 +12,7 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   List<ExpenseCategoryModel> allExpenseCategories = [];
   String? categoryName;
   bool? instantType = false;
+  int? catId;
   ExpenseCategoryModel? expCategory;
 
   setCategoryName(String categoryName) {
@@ -21,6 +22,13 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   setInstantType(bool instantType) {
     this.instantType = instantType;
     notifyListeners();
+  }
+
+  loadDataForUpdate(ExpenseCategoryModel expenseCategoryModel) {
+    catId = expenseCategoryModel.id;
+    categoryName = expenseCategoryModel.name;
+    instantType = expenseCategoryModel.instant;
+    // notifyListeners();
   }
 
   String? validateCategoryName(String? categoryName) {
@@ -45,6 +53,20 @@ class ExpenseCategoryProvider extends ChangeNotifier {
       await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
       categoryName = '';
       instantType = false;
+      getExpenseCategories();
+      AppRouter.appRouter.pop();
+    }
+  }
+
+  updateExpenseCategor() async {
+    if (expenseCatKey.currentState!.validate()) {
+      expenseCatKey.currentState!.save();
+      ExpenseCategoryModel expenseCategory = ExpenseCategoryModel(
+          id: catId, name: categoryName, instant: instantType);
+      await ExpCatDBHelper.expCatDBHelper.updateExpCategory(expenseCategory);
+      categoryName = '';
+      instantType = false;
+      catId = null;
       getExpenseCategories();
       AppRouter.appRouter.pop();
     }

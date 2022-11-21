@@ -42,9 +42,9 @@ class ExpenseHeaderModel {
     return ExpenseHeaderModel(
         id: map[DBHelper.dbHelper.expenseHeaderDDL.idColumn] as int,
         expenseName:
-            map[DBHelper.dbHelper.expenseHeaderDDL.expenseDescColumn] as String,
-        expenseDesc:
             map[DBHelper.dbHelper.expenseHeaderDDL.expenseNameColumn] as String,
+        expenseDesc:
+            map[DBHelper.dbHelper.expenseHeaderDDL.expenseDescColumn] as String,
         amount: map[DBHelper.dbHelper.expenseHeaderDDL.amountColumn] as num,
         inBank: intToBool(
             map[DBHelper.dbHelper.expenseHeaderDDL.inBankColumn] as int),
