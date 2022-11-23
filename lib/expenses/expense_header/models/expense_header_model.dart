@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
-import 'package:my_wallet/expenses/models/expense_line_model.dart';
+import 'package:my_wallet/expenses/expense_lines/models/expense_line_model.dart';
 import 'package:my_wallet/helper/util.dart';
 
 class ExpenseHeaderModel {

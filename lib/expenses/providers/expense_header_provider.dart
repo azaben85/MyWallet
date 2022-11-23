@@ -33,6 +33,26 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   int? categoryId;
   int? headerId;
 
+  int currentStep = 0;
+
+  nextStep() async {
+    if (currentStep == 1) {
+      await insertUpdateExpenseHeader();
+    } else {
+      currentStep++;
+      notifyListeners();
+    }
+  }
+
+  previousStep() {
+    if (currentStep == 0) {
+      AppRouter.appRouter.pop();
+    } else {
+      currentStep--;
+      notifyListeners();
+    }
+  }
+
   setHeaderName(String headerName) {
     this.headerName = headerName;
   }
@@ -60,6 +80,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     headerDesc = '';
     inBank = false;
     headerId = null;
+    currentStep = 0;
   }
 
   String? validateString(String? value) {
@@ -67,6 +88,12 @@ class ExpenseHeaderProvider extends ChangeNotifier {
       return 'Must have value';
     }
     return null;
+  }
+
+  validateFields() {
+    if (expenseHeaderKey.currentState!.validate()) {
+      nextStep();
+    }
   }
 
   insertUpdateExpenseHeader() async {
@@ -93,7 +120,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     }
   }
 
-  deleteExpenseCategory() async {
+  deleteExpenseHeader() async {
     await ExpHeaderDBHelper.dbHelper.deleteExpHeader(headerId ?? -1);
     resetFields();
 

@@ -5,7 +5,7 @@ import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_wallet/expenses/ui/screens/expense_header_line_screen.dart';
+import 'package:my_wallet/expenses/expense_lines/ui/screens/expense_header_line_screen.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseHeaderWidget extends StatelessWidget {

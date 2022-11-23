@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_lines_helper.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
-import 'package:my_wallet/expenses/models/expense_line_model.dart';
+import 'package:my_wallet/expenses/expense_lines/models/expense_line_model.dart';
 
 class ExpenseLineProvider extends ChangeNotifier {
   ExpenseLineProvider() {
