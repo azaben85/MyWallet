@@ -14,6 +14,14 @@ class AddExpenseCategory extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Add New Category'),
+          actions: [
+            InkWell(
+              child: const Icon(Icons.delete),
+              onTap: () {
+                provider.deleteExpenseCategory();
+              },
+            )
+          ],
         ),
         body: Form(
           key: provider.expenseCatKey,
@@ -30,11 +38,7 @@ class AddExpenseCategory extends StatelessWidget {
                   onChanged: provider.setInstantType),
               ElevatedButton(
                   onPressed: () {
-                    if (provider.catId == null) {
-                      provider.insertExpenseCategor();
-                    } else {
-                      provider.updateExpenseCategor();
-                    }
+                    provider.insertUpdateExpenseCategory();
                   },
                   child: const Text('Create Expense Category'))
             ],

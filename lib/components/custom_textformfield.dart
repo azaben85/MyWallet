@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  Function validation;
+  Function? validation;
   Function onSave;
   String label;
   bool isPassowrd;
   String? initialValue;
   CustomTextField(
       {Key? key,
-      required this.validation,
+      this.validation,
       required this.onSave,
       required this.label,
       this.initialValue,
@@ -20,7 +20,9 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       initialValue: initialValue,
       obscureText: isPassowrd,
-      validator: (v) => validation(v),
+      validator: (v) {
+        return validation == null ? null : validation!(v);
+      },
       onSaved: (v) => onSave(v),
       decoration: InputDecoration(hintText: label),
     );

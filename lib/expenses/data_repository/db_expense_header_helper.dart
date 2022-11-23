@@ -37,4 +37,12 @@ class ExpHeaderDBHelper {
         where: 'id=?', whereArgs: [expenseHeaderModel.id]);
     return updatedCount;
   }
+
+  Future<int> deleteExpHeader(int id) async {
+    Database database = DBHelper.dbHelper.database!;
+
+    int updatedCount =
+        await database.delete(table.tableName, where: 'id=?', whereArgs: [id]);
+    return updatedCount;
+  }
 }

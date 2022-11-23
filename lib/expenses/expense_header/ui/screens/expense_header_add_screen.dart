@@ -17,9 +17,15 @@ class AddExpenseHeader extends StatelessWidget {
           child: ListView(
             children: [
               CustomTextField(
-                  validation: provider.validateName,
+                  initialValue: provider.headerName,
+                  validation: provider.validateString,
                   onSave: provider.setHeaderName,
                   label: 'Title'),
+              CustomTextField(
+                  initialValue: provider.headerDesc,
+                  // validation: provider.validateString,
+                  onSave: provider.setHeaderDesc,
+                  label: 'Description'),
               CustomCheckBoxTile(
                 label: 'In Bank',
                 value: provider.inBank ?? false,
@@ -27,7 +33,7 @@ class AddExpenseHeader extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    provider.insertExpenseHeader();
+                    provider.insertUpdateExpenseHeader();
                   },
                   child: const Text('Add New Expense'))
             ],

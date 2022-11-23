@@ -45,30 +45,31 @@ class ExpenseCategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  insertExpenseCategor() async {
-    if (expenseCatKey.currentState!.validate()) {
-      expenseCatKey.currentState!.save();
-      ExpenseCategoryModel expenseCategory =
-          ExpenseCategoryModel(name: categoryName, instant: instantType);
-      await ExpCatDBHelper.expCatDBHelper.insertNewExpCategory(expenseCategory);
-      categoryName = '';
-      instantType = false;
-      getExpenseCategories();
-      AppRouter.appRouter.pop();
-    }
-  }
-
-  updateExpenseCategor() async {
+  insertUpdateExpenseCategory() async {
     if (expenseCatKey.currentState!.validate()) {
       expenseCatKey.currentState!.save();
       ExpenseCategoryModel expenseCategory = ExpenseCategoryModel(
           id: catId, name: categoryName, instant: instantType);
-      await ExpCatDBHelper.expCatDBHelper.updateExpCategory(expenseCategory);
+      if (catId == null) {
+        await ExpCatDBHelper.expCatDBHelper
+            .insertNewExpCategory(expenseCategory);
+      } else {
+        await ExpCatDBHelper.expCatDBHelper.updateExpCategory(expenseCategory);
+      }
       categoryName = '';
       instantType = false;
       catId = null;
       getExpenseCategories();
       AppRouter.appRouter.pop();
     }
+  }
+
+  deleteExpenseCategory() async {
+    await ExpCatDBHelper.expCatDBHelper.deleteExpCategory(catId ?? -1);
+    categoryName = '';
+    instantType = false;
+    catId = null;
+    getExpenseCategories();
+    AppRouter.appRouter.pop();
   }
 }

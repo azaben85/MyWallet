@@ -28,9 +28,10 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   GlobalKey<FormState> expenseHeaderKey = GlobalKey<FormState>();
 
   String? headerName;
-
   String? headerDesc;
   bool? inBank;
+  int? categoryId;
+  int? headerId;
 
   setHeaderName(String headerName) {
     this.headerName = headerName;
@@ -45,17 +46,34 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? validateName(String? value) {
+  loadDataForUpdate(ExpenseHeaderModel expenseHeaderModel) {
+    categoryId = expenseHeaderModel.categoryId;
+    headerName = expenseHeaderModel.expenseName;
+    headerDesc = expenseHeaderModel.expenseDesc;
+    inBank = expenseHeaderModel.inBank;
+    headerId = expenseHeaderModel.id;
+    notifyListeners();
+  }
+
+  resetFields() {
+    headerName = '';
+    headerDesc = '';
+    inBank = false;
+    headerId = null;
+  }
+
+  String? validateString(String? value) {
     if (value == null || value.isEmpty) {
       return 'Must have value';
     }
     return null;
   }
 
-  insertExpenseHeader() async {
+  insertUpdateExpenseHeader() async {
     if (expenseHeaderKey.currentState!.validate()) {
       expenseHeaderKey.currentState!.save();
       ExpenseHeaderModel expenseHeader = ExpenseHeaderModel(
+          id: headerId,
           expenseName: headerName ?? '',
           expenseDesc: headerDesc ?? '',
           amount: 0.0,
@@ -63,12 +81,23 @@ class ExpenseHeaderProvider extends ChangeNotifier {
           categoryId: expCategory!.id!,
           endDate: '',
           startDate: '');
-      await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
-      headerName = '';
-      headerDesc = '';
-      inBank = false;
+
+      if (headerId == null) {
+        await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
+      } else {
+        await ExpHeaderDBHelper.dbHelper.updateExpHeader(expenseHeader);
+      }
+      resetFields();
       getExpenseHeader();
       AppRouter.appRouter.pop();
     }
+  }
+
+  deleteExpenseCategory() async {
+    await ExpHeaderDBHelper.dbHelper.deleteExpHeader(headerId ?? -1);
+    resetFields();
+
+    getExpenseHeader();
+    AppRouter.appRouter.pop();
   }
 }

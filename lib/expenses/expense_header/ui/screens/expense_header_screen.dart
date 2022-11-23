@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/components/custom_scaffold.dart';
 import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen.dart';
@@ -22,11 +23,8 @@ class ExpesnseHeaderScreen extends StatelessWidget {
               child:
                   const SizedBox(width: 52, height: 52, child: Icon(Icons.add)),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) {
-                    return AddExpenseHeader();
-                  },
-                ));
+                eHeaderProvider.resetFields();
+                AppRouter.appRouter.push(AddExpenseHeader());
               },
             )
           ],
@@ -36,14 +34,12 @@ class ExpesnseHeaderScreen extends StatelessWidget {
             ExpenseCategoryWidget(eHeaderProvider.expCategory!,
                 allowNavigate: false),
             Expanded(
-              child: GridView.builder(
+              child: ListView.builder(
                 itemCount: eHeaderProvider.allExpenseHeader.length,
                 itemBuilder: (context, index) {
                   return ExpenseHeaderWidget(
                       eHeaderProvider.allExpenseHeader[index]);
                 },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
               ),
             )
           ],
