@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_wallet/components/add_update_widget.dart';
 import 'package:my_wallet/components/custom_customcheckboxtile.dart';
+import 'package:my_wallet/components/delete_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_wallet/components/custom_textformfield.dart';
@@ -13,15 +16,7 @@ class AddExpenseCategory extends StatelessWidget {
         builder: (context, provider, child) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Add New Category'),
-          actions: [
-            InkWell(
-              child: const Icon(Icons.delete),
-              onTap: () {
-                provider.deleteExpenseCategory();
-              },
-            )
-          ],
+          title: Text('${provider.catId == null ? 'Add' : 'Edit'} Category'),
         ),
         body: Form(
           key: provider.expenseCatKey,
@@ -36,11 +31,29 @@ class AddExpenseCategory extends StatelessWidget {
                   label: 'Instant Expense',
                   value: provider.instantType ?? false,
                   onChanged: provider.setInstantType),
-              ElevatedButton(
-                  onPressed: () {
-                    provider.insertUpdateExpenseCategory();
-                  },
-                  child: const Text('Create Expense Category'))
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AddUpdateButtonWidget(
+                      margin: EdgeInsets.only(left: 8.w, right: 8.w),
+                      onTap: () {
+                        provider.insertUpdateExpenseCategory();
+                      },
+                      label: provider.catId == null
+                          ? 'Add Category'
+                          : 'Edit Category'),
+                  if (provider.catId != null)
+                    DeleteButtonWidget(
+                        margin: EdgeInsets.only(left: 8.w, right: 8.w),
+                        onTap: () {
+                          provider.deleteExpenseCategory();
+                        },
+                        label: 'Delete'),
+                ],
+              )
             ],
           ),
         ),

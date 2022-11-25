@@ -27,25 +27,47 @@ class AppRouter {
     return navigatorKey.currentState!.canPop();
   }
 
-  showCustomDialog(String title, String content) {
+  showNoteDialog(String title, Widget? content) {
     showDialog(
       context: navigatorKey.currentContext!,
       builder: (context) {
         return AlertDialog(
           title: Text(title),
-          content: SizedBox(
-            height: 300,
-            child: Column(
-              children: [
-                Text(content),
-                ElevatedButton(
-                    onPressed: () {
-                      pop();
-                    },
-                    child: Text('Close'))
-              ],
+          content: content,
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  pop();
+                },
+                child: Text('Close'))
+          ],
+        );
+      },
+    );
+  }
+
+  showConfirmDialog(String title, Widget? content, Function? onConfirm) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: content,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                pop();
+              },
+              child: Text('Close'),
             ),
-          ),
+            ElevatedButton(
+              onPressed: () {
+                onConfirm!();
+                pop();
+              },
+              child: Text('Confirm'),
+            )
+          ],
         );
       },
     );

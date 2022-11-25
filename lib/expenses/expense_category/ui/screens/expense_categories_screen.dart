@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/expense_category/ui/screens/expense_category_add_screen.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
 import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
@@ -9,32 +10,30 @@ class ExpesnseCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Expenses'),
-        actions: [
-          InkWell(
-            child:
-                const SizedBox(width: 52, height: 52, child: Icon(Icons.add)),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) {
-                  return AddExpenseCategory();
-                },
-              ));
+    return Consumer<ExpenseCategoryProvider>(
+        builder: (context, provider, child) {
+      return Scaffold(
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: Color.fromRGBO(202, 192, 248, 1),
+              onPressed: () {
+                provider.clearFields();
+                AppRouter.appRouter.push(AddExpenseCategory());
+              },
+              child: const Icon(Icons.add)),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          appBar: AppBar(
+            centerTitle: true,
+            backgroundColor: Colors.black,
+            title: const Text('Expense Categories'),
+          ),
+          body: ListView.builder(
+            itemCount: provider.allExpenseCategories.length,
+            itemBuilder: (context, index) {
+              return ExpenseCategoryWidget(
+                  provider.allExpenseCategories[index]);
             },
-          )
-        ],
-      ),
-      body: Consumer<ExpenseCategoryProvider>(
-          builder: (context, provider, child) {
-        return ListView.builder(
-          itemCount: provider.allExpenseCategories.length,
-          itemBuilder: (context, index) {
-            return ExpenseCategoryWidget(provider.allExpenseCategories[index]);
-          },
-        );
-      }),
-    );
+          ));
+    });
   }
 }

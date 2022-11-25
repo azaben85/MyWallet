@@ -1,16 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen_planned.dart';
+import 'package:my_wallet/expenses/expense_header/ui/screens/add_planned_line_screen.dart';
+import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
+import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:my_wallet/app_router/app_router.dart';
-import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen_planned.dart';
-import 'package:my_wallet/expenses/expense_lines/ui/screens/expense_header_line_screen.dart';
-import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
-
-class ExpesneHeaderMainScreen extends StatelessWidget {
+class AddPlannedExpesneHeaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseHeaderProvider>(builder: (context, provider, child) {
+    return Consumer2<ExpenseHeaderProvider, ExpenseLineProvider>(
+        builder: (context, headerProvider, lineProvider, child) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Expense Header'),
@@ -23,26 +22,28 @@ class ExpesneHeaderMainScreen extends StatelessWidget {
           //   );
           // },
 
-          //type: StepperType.horizontal,
-          currentStep: provider.currentStep,
+          type: StepperType.horizontal,
+          currentStep: headerProvider.currentStep,
           onStepContinue: () async {
-            // bool result = await provider.insertUpdateExpenseHeader();
-            // if (result) {
-            provider.validateFields();
-            // }
+            if (headerProvider.currentStep == 0) {
+              headerProvider.validateFields();
+            } else {
+              int id = await headerProvider.insertUpdateExpenseHeader();
+              await lineProvider.insertExpenseLines(id);
+            }
           },
           onStepCancel: () {
-            provider.previousStep();
+            headerProvider.previousStep();
           },
           steps: [
             Step(
-                isActive: provider.currentStep >= 0,
+                isActive: headerProvider.currentStep >= 0,
                 title: const Text('Header'),
                 content: AddExpensePlannedHeader()),
             Step(
-                isActive: provider.currentStep >= 1,
+                isActive: headerProvider.currentStep >= 1,
                 title: const Text('Lines'),
-                content: const ExpenseLineScreen()),
+                content: const AddPlannedLineScreen()),
           ],
         ),
       );

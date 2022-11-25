@@ -69,7 +69,7 @@ class DBHelper {
   createTable(String tableName, String ddl) async {
     int exists = await checkIfTableExists(tableName);
     if (exists > 0) {
-      await dropTable(tableName);
+      exists = await dropTable(tableName);
     }
     if (exists == 0) {
       await database!.execute(ddl);
@@ -77,11 +77,13 @@ class DBHelper {
     }
   }
 
-  dropTable(String tableName) async {
+  Future<int> dropTable(String tableName) async {
     if (dropMode) {
       await database!.execute('''drop table $tableName''');
       log('$tableName was DROPPED');
+      return 0;
     }
+    return 1;
   }
 
   Future<int> checkIfTableExists(String tableName) async {

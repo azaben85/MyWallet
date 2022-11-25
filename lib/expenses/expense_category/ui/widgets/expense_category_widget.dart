@@ -21,18 +21,18 @@ class ExpenseCategoryWidget extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              child: IntExpenseCatWidget(expenseCategory: expenseCategory),
+              child: IntExpenseCatWidget(name: expenseCategory.name!),
               onTap: () {
                 Provider.of<ExpenseHeaderProvider>(context, listen: false)
                     .updateCategoryModel(expenseCategory);
-                AppRouter.appRouter.push(const ExpesnseHeaderScreen());
+                AppRouter.appRouter.push(const ExpenseHeaderScreen());
               },
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 28.w),
             child: InkWell(
-              child: const Icon(Icons.edit),
+              child: Container(width: 52, child: const Icon(Icons.edit)),
               onTap: () {
                 Provider.of<ExpenseCategoryProvider>(context, listen: false)
                     .loadDataForUpdate(expenseCategory);
@@ -43,18 +43,17 @@ class ExpenseCategoryWidget extends StatelessWidget {
         ],
       );
     } else {
-      return IntExpenseCatWidget(expenseCategory: expenseCategory);
+      return IntExpenseCatWidget(name: expenseCategory.name!);
     }
   }
 }
 
 class IntExpenseCatWidget extends StatelessWidget {
+  String name;
   IntExpenseCatWidget({
     super.key,
-    required this.expenseCategory,
+    required this.name,
   });
-
-  ExpenseCategoryModel expenseCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +70,7 @@ class IntExpenseCatWidget extends StatelessWidget {
           SizedBox(
             width: 12.w,
           ),
-          Text(expenseCategory.name!),
+          Text(name),
         ],
       )),
     );

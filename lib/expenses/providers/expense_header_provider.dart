@@ -19,6 +19,11 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   }
 
   ExpenseCategoryModel? expCategory;
+  String? headerName;
+  String? headerDesc;
+  bool? inBank;
+  int? categoryId;
+  int? headerId;
 
   updateCategoryModel(ExpenseCategoryModel expCategory) {
     this.expCategory = expCategory;
@@ -27,18 +32,10 @@ class ExpenseHeaderProvider extends ChangeNotifier {
 
   GlobalKey<FormState> expenseHeaderKey = GlobalKey<FormState>();
 
-  String? headerName;
-  String? headerDesc;
-  bool? inBank;
-  int? categoryId;
-  int? headerId;
-
   int currentStep = 0;
 
-  nextStep() async {
-    if (currentStep == 1) {
-      await insertUpdateExpenseHeader();
-    } else {
+  nextStep() {
+    if (currentStep == 0) {
       currentStep++;
       notifyListeners();
     }
@@ -46,6 +43,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
 
   previousStep() {
     if (currentStep == 0) {
+      resetFields();
       AppRouter.appRouter.pop();
     } else {
       currentStep--;
@@ -96,7 +94,7 @@ class ExpenseHeaderProvider extends ChangeNotifier {
     }
   }
 
-  insertUpdateExpenseHeader() async {
+  Future<int> insertUpdateExpenseHeader() async {
     if (expenseHeaderKey.currentState!.validate()) {
       expenseHeaderKey.currentState!.save();
       ExpenseHeaderModel expenseHeader = ExpenseHeaderModel(
@@ -108,23 +106,28 @@ class ExpenseHeaderProvider extends ChangeNotifier {
           categoryId: expCategory!.id!,
           endDate: '',
           startDate: '');
+      int id = 0;
 
       if (headerId == null) {
-        await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
+        id = await ExpHeaderDBHelper.dbHelper.insertNewExpHeader(expenseHeader);
       } else {
         await ExpHeaderDBHelper.dbHelper.updateExpHeader(expenseHeader);
       }
       resetFields();
       getExpenseHeader();
-      AppRouter.appRouter.pop();
+
+      return id;
     }
+    return -1;
   }
 
   deleteExpenseHeader() async {
-    await ExpHeaderDBHelper.dbHelper.deleteExpHeader(headerId ?? -1);
-    resetFields();
-
-    getExpenseHeader();
-    AppRouter.appRouter.pop();
+    AppRouter.appRouter.showConfirmDialog(
+        'Delete Type', Text('Are you sure to delete the Type?'), () async {
+      await ExpHeaderDBHelper.dbHelper.deleteExpHeader(headerId ?? -1);
+      resetFields();
+      getExpenseHeader();
+      AppRouter.appRouter.pop();
+    });
   }
 }

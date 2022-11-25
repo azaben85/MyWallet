@@ -4,20 +4,20 @@ class ExpenseLineModel {
   int? id;
   num subAmount;
   String duedate;
-  int headerId;
+  int? headerId;
 
   ExpenseLineModel({
     this.id,
     required this.subAmount,
     required this.duedate,
-    required this.headerId,
+    this.headerId,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      DBHelper.dbHelper.expenseLinesDDL.idColumn: id,
       DBHelper.dbHelper.expenseLinesDDL.subAmountColumn: subAmount,
       DBHelper.dbHelper.expenseLinesDDL.duedateColumn: duedate,
+      DBHelper.dbHelper.expenseLinesDDL.headerIdColumn: headerId,
     };
   }
 

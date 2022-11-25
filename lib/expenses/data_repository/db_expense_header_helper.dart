@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:my_wallet/expenses/data_repository/db_expense_lines_helper.dart';
 import 'package:my_wallet/expenses/data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
+import 'package:my_wallet/expenses/expense_lines/models/expense_line_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpHeaderDBHelper {
@@ -40,6 +44,13 @@ class ExpHeaderDBHelper {
 
   Future<int> deleteExpHeader(int id) async {
     Database database = DBHelper.dbHelper.database!;
+
+    List<ExpenseLineModel> expenseLineList =
+        await ExpLinesDBHelper.dbHelper.getAllExpLines(expHeaderId: id);
+
+    for (ExpenseLineModel expenseLine in expenseLineList) {
+      await ExpLinesDBHelper.dbHelper.deleteExpLine(expenseLine.id!);
+    }
 
     int updatedCount =
         await database.delete(table.tableName, where: 'id=?', whereArgs: [id]);

@@ -27,11 +27,6 @@ class AddExpensePlannedHeader extends StatelessWidget {
               value: provider.inBank ?? false,
               onChanged: provider.setInBank,
             ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       provider.insertUpdateExpenseHeader();
-            //     },
-            //     child: const Text('Add New Expense'))
           ],
         ),
       );

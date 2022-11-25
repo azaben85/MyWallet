@@ -56,20 +56,27 @@ class ExpenseCategoryProvider extends ChangeNotifier {
       } else {
         await ExpCatDBHelper.expCatDBHelper.updateExpCategory(expenseCategory);
       }
-      categoryName = '';
-      instantType = false;
-      catId = null;
+      clearFields();
       getExpenseCategories();
       AppRouter.appRouter.pop();
     }
   }
 
-  deleteExpenseCategory() async {
-    await ExpCatDBHelper.expCatDBHelper.deleteExpCategory(catId ?? -1);
+  void clearFields() {
     categoryName = '';
     instantType = false;
     catId = null;
-    getExpenseCategories();
-    AppRouter.appRouter.pop();
+  }
+
+  deleteExpenseCategory() async {
+    AppRouter.appRouter.showConfirmDialog(
+        'Delete Category', Text('Are you sure to delete the category?'),
+        () async {
+      await ExpCatDBHelper.expCatDBHelper.deleteExpCategory(catId ?? -1);
+      clearFields();
+
+      getExpenseCategories();
+      AppRouter.appRouter.pop();
+    });
   }
 }
