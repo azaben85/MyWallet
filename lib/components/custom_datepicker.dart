@@ -19,7 +19,6 @@ class CustomDatePicker extends StatelessWidget {
         return validation == null ? null : validation!(v);
       },
       controller: dateInput,
-      //editing controller of this TextField
       decoration: const InputDecoration(
           icon: Icon(Icons.calendar_today), //icon of text field
           labelText: "Enter Date" //label text of field

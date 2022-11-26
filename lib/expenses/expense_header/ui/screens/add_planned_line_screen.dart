@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/components/custom_datepicker.dart';
 import 'package:my_wallet/components/custom_textformfield.dart';
+import 'package:my_wallet/components/row_widget.dart';
 import 'package:my_wallet/expenses/expense_lines/ui/widgets/expense_line_record_widget.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:provider/provider.dart';
@@ -19,16 +20,6 @@ class AddPlannedLineScreen extends StatelessWidget {
                 height: 50,
                 child: Row(
                   children: [
-                    // Expanded(
-                    //   child: CustomTextField(
-                    //     contoller: provider.dueDateContoller,
-                    //     //initialValue: provider.dueDate,
-                    //     textInputType: TextInputType.datetime,
-                    //     onSave: provider.setDueDate,
-                    //     label: 'Due Date',
-                    //     validation: provider.validateDate,
-                    //   ),
-                    // ),
                     Expanded(
                         flex: 2,
                         child: CustomDatePicker(
@@ -39,7 +30,7 @@ class AddPlannedLineScreen extends StatelessWidget {
                           contoller: provider.amountContoller,
                           // initialValue: provider.amount?.toString() ?? '',
                           textInputType: TextInputType.number,
-                          onSave: provider.setAmount,
+                          //    onSave: provider.setAmount,
                           label: 'Amount',
                           validation: provider.validateAmount),
                     ),
@@ -52,8 +43,17 @@ class AddPlannedLineScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              Row(
+                children: [
+                  RowWidget(label: 'Due Date', isHeader: true),
+                  RowWidget(label: 'Amount', isHeader: true),
+                ],
+              ),
               ...provider.tempExpenseLines
-                  .map((e) => ExpLineRecordForAddWidget(expenseLineModel: e))
+                  .map((e) => ExpLineRecordForAddWidget(
+                        expenseLineModel: e,
+                        showDesc: false,
+                      ))
                   .toList()
             ],
           ));

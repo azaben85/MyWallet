@@ -16,7 +16,9 @@ class ExpLinesDBHelper {
       data = await DBHelper.dbHelper.database!.query(table.tableName);
     } else {
       data = await DBHelper.dbHelper.database!.query(table.tableName,
-          where: '${table.headerIdColumn} = ?', whereArgs: [expHeaderId]);
+          where: '${table.headerIdColumn} = ?',
+          whereArgs: [expHeaderId],
+          orderBy: table.duedateColumn);
     }
 
     return data.map((e) => ExpenseLineModel.fromMap(e)).toList();

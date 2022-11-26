@@ -4,6 +4,7 @@ class ExpenseLinesDDL {
   String subAmountColumn = 'sub_amount';
   String duedateColumn = 'due_date';
   String headerIdColumn = 'header_id';
+  String descriptionColumn = 'desc';
 }
 
 class ExpenseHeaderDDL {

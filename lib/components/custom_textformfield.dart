@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   Function? validation;
-  Function onSave;
+  Function? onSave;
   String label;
   bool isPassowrd;
   String? initialValue;
@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
   CustomTextField(
       {Key? key,
       this.validation,
-      required this.onSave,
+      this.onSave,
       required this.label,
       this.initialValue,
       this.isPassowrd = false,
@@ -32,7 +32,9 @@ class CustomTextField extends StatelessWidget {
           validator: (v) {
             return validation == null ? null : validation!(v);
           },
-          onSaved: (v) => onSave(v),
+          onSaved: (v) {
+            return onSave == null ? null : onSave!(v);
+          },
           decoration: InputDecoration(hintText: label),
         ),
       );
@@ -47,7 +49,6 @@ class CustomTextField extends StatelessWidget {
         validator: (v) {
           return validation == null ? null : validation!(v);
         },
-        onSaved: (v) => onSave(v),
         decoration: InputDecoration(hintText: label),
       ),
     );

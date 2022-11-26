@@ -21,11 +21,11 @@ class AddUpdateButtonWidget extends StatelessWidget {
       child: Container(
         padding: padding,
         margin: margin,
-        height: 64.h,
+        height: 55.h,
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28.r),
+            topLeft: Radius.circular(25.r),
           ),
           border: Border.all(
             width: 1,

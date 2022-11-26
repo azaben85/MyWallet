@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
+import 'package:my_wallet/expenses/expense_category/ui/screens/expense_category_add_region.dart';
 import 'package:my_wallet/expenses/expense_category/ui/screens/expense_category_add_screen.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_screen.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
@@ -36,7 +37,9 @@ class ExpenseCategoryWidget extends StatelessWidget {
               onTap: () {
                 Provider.of<ExpenseCategoryProvider>(context, listen: false)
                     .loadDataForUpdate(expenseCategory);
-                AppRouter.appRouter.push(AddExpenseCategory());
+                //AppRouter.appRouter.push(AddExpenseCategory());
+                AppRouter.appRouter
+                    .showAlertDialog('Add New', AddExpenseCategoryContent());
               },
             ),
           )
@@ -66,7 +69,7 @@ class IntExpenseCatWidget extends StatelessWidget {
       child: Center(
           child: Row(
         children: [
-          ImageAsset('Expenses.png', width: 48.w, height: 48.h),
+          ImageAsset('Expenses.png', width: 40.w, height: 40.h),
           SizedBox(
             width: 12.w,
           ),

@@ -17,23 +17,25 @@ class ExpenseLineProvider extends ChangeNotifier {
 
   TextEditingController dueDateContoller = TextEditingController();
   TextEditingController amountContoller = TextEditingController();
+  TextEditingController descContoller = TextEditingController();
 
   int? headerId;
+  int? lineId;
   ExpenseHeaderModel? headerModel;
 
   clearFields() {
     dueDateContoller.text = '';
     amountContoller.text = '';
+    descContoller.text = '';
+    lineId = null;
     tempExpenseLines.clear();
   }
 
-  setDueDate(String dueDate) {
-    dueDateContoller.text = dueDate;
-  }
-
-  setAmount(String amount) {
-    amountContoller.text = amount;
-    notifyListeners();
+  loadDataForUpdate(ExpenseLineModel expenseLineModel) {
+    dueDateContoller.text = expenseLineModel.duedate;
+    amountContoller.text = expenseLineModel.subAmount.toString();
+    descContoller.text = expenseLineModel.description ?? '';
+    lineId = expenseLineModel.id;
   }
 
   String? validateDate(String dueDate) {
@@ -44,8 +46,15 @@ class ExpenseLineProvider extends ChangeNotifier {
   }
 
   String? validateAmount(String amount) {
-    if (!isFloat(amount)) {
+    if (!isFloat(amountContoller.text) || amountContoller.text.isEmpty) {
       return 'Must be numeric';
+    }
+    return null;
+  }
+
+  String? validateDesc(String desc) {
+    if (descContoller.text.isEmpty) {
+      return 'Must have value';
     }
     return null;
   }
@@ -76,12 +85,6 @@ class ExpenseLineProvider extends ChangeNotifier {
     getExpenseLine();
   }
 
-  updateExpenseLine(ExpenseLineModel expenseLine) async {
-    await ExpLinesDBHelper.dbHelper.updateExpLine(expenseLine);
-
-    getExpenseLine();
-  }
-
   insertExpenseLines(int headerId) async {
     for (ExpenseLineModel expenseLine in tempExpenseLines) {
       expenseLine.headerId = headerId;
@@ -90,5 +93,35 @@ class ExpenseLineProvider extends ChangeNotifier {
     clearFields();
     getExpenseLine();
     AppRouter.appRouter.pop();
+  }
+
+  insertExpenseLine() async {
+    if (expenseLineKey.currentState!.validate()) {
+      expenseLineKey.currentState!.save();
+      ExpenseLineModel expenseLineModel = ExpenseLineModel(
+          description: descContoller.text,
+          headerId: headerModel!.id,
+          duedate: dueDateContoller.text,
+          subAmount: double.parse(amountContoller.text));
+      if (lineId == null) {
+        await ExpLinesDBHelper.dbHelper.insertNewExpLine(expenseLineModel);
+      } else {
+        expenseLineModel.id = lineId;
+        await ExpLinesDBHelper.dbHelper.updateExpLine(expenseLineModel);
+      }
+      clearFields();
+      getExpenseLine();
+      AppRouter.appRouter.pop();
+    }
+  }
+
+  deleteExpenseLine() async {
+    AppRouter.appRouter.showConfirmDialog(
+        'Delete Type', Text('Are you sure to delete the record?'), () async {
+      await ExpLinesDBHelper.dbHelper.deleteExpLine(lineId ?? -1);
+      clearFields();
+      getExpenseLine();
+      AppRouter.appRouter.pop();
+    });
   }
 }

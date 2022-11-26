@@ -3,21 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:my_wallet/components/custom_appbar.dart';
 
 class CustomScaffold extends StatelessWidget {
-  Widget? title;
-  Widget? bottomAppBar;
+  Widget? floatingActionButton;
   Widget? body;
+  Widget? titleWidget;
+  String? title;
   CustomScaffold({
-    Key? key,
-    this.title,
+    this.floatingActionButton,
     this.body,
-    this.bottomAppBar,
-  }) : super(key: key);
+    this.title,
+    this.titleWidget,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: title, bottomAppBar: bottomAppBar),
-      body: body,
-    );
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.black,
+          title: titleWidget ?? Text(title ?? ''),
+        ),
+        body: body);
   }
 }

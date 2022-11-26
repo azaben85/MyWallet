@@ -12,13 +12,12 @@ class AddExpenseHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseHeaderProvider>(builder: (context, provider, child) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(provider.headerId == null ? 'Add Type' : 'Edit Type'),
-        ),
-        body: Form(
-          key: provider.expenseHeaderKey,
-          child: ListView(
+      return Form(
+        key: provider.expenseHeaderKey,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width * 0.60,
+          child: Column(
             children: [
               CustomTextField(
                   initialValue: provider.headerName,
@@ -47,8 +46,7 @@ class AddExpenseHeader extends StatelessWidget {
                           AppRouter.appRouter.pop();
                         }
                       },
-                      label:
-                          provider.headerId == null ? 'Add Type' : 'Edit Type'),
+                      label: provider.headerId == null ? 'Add' : 'Edit'),
                   if (provider.headerId != null)
                     DeleteButtonWidget(
                         margin: EdgeInsets.only(left: 8.w, right: 8.w),

@@ -8,7 +8,7 @@ class MyWalletMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: const Text('MyWallet', style: TextStyle(color: Colors.white)),
+      title: 'MyWallet',
       body: ElevatedButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(

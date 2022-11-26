@@ -40,7 +40,8 @@ class DBHelper {
           ${expenseLinesDDL.idColumn} INTEGER  primary key autoincrement , 
           ${expenseLinesDDL.headerIdColumn} INTEGER,
           ${expenseLinesDDL.subAmountColumn} REAL,
-            ${expenseLinesDDL.duedateColumn} TEXT
+            ${expenseLinesDDL.duedateColumn} TEXT,
+            ${expenseLinesDDL.descriptionColumn} TEXT
         )
       ''');
 

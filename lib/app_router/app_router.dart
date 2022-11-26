@@ -27,6 +27,19 @@ class AppRouter {
     return navigatorKey.currentState!.canPop();
   }
 
+  showAlertDialog(String title, Widget? content) {
+    showDialog(
+      useSafeArea: true,
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: content,
+        );
+      },
+    );
+  }
+
   showNoteDialog(String title, Widget? content) {
     showDialog(
       context: navigatorKey.currentContext!,

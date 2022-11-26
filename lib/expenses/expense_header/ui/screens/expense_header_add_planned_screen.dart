@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/components/custom_scaffold.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen_planned.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/add_planned_line_screen.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
@@ -10,10 +11,8 @@ class AddPlannedExpesneHeaderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<ExpenseHeaderProvider, ExpenseLineProvider>(
         builder: (context, headerProvider, lineProvider, child) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Expense Header'),
-        ),
+      return CustomScaffold(
+        title: 'New Planned Expense',
         body: Stepper(
           // controlsBuilder: (context, details) {
           //   return StepperBuilder(
