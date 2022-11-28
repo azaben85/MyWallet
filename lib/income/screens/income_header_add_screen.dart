@@ -6,52 +6,47 @@ import 'package:my_wallet/components/custom_customcheckboxtile.dart';
 import 'package:my_wallet/components/custom_textformfield.dart';
 import 'package:my_wallet/components/delete_widget.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
+import 'package:my_wallet/helper/util.dart';
+import 'package:my_wallet/income/providers/income_header_provider.dart';
 import 'package:provider/provider.dart';
 
-class AddExpenseHeader extends StatelessWidget {
+class AddIncomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseHeaderProvider>(builder: (context, provider, child) {
+    return Consumer<IncomeHeaderProvider>(builder: (context, provider, child) {
       return Form(
-        key: provider.expenseHeaderKey,
+        key: provider.incomeHeaderKey,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width * 0.60,
           child: Column(
             children: [
               CustomTextField(
-                  initialValue: provider.headerName,
-                  validation: provider.validateString,
-                  onSave: provider.setHeaderName,
-                  label: 'To'),
+                  initialValue: provider.incomeHeaderModel.name,
+                  validation: validateDesc,
+                  onSave: provider.setName,
+                  label: 'Title'),
               CustomTextField(
-                  initialValue: provider.headerDesc,
+                  initialValue: provider.incomeHeaderModel.desc,
                   // validation: provider.validateString,
-                  onSave: provider.setHeaderDesc,
+                  onSave: provider.setDesc,
                   label: 'Description'),
-              CustomCheckBoxTile(
-                label: 'In Bank',
-                value: provider.inBank ?? false,
-                onChanged: provider.setInBank,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AddUpdateButtonWidget(
                       margin: EdgeInsets.only(left: 8.w, right: 8.w),
                       onTap: () async {
-                        int id = await provider.insertUpdateExpenseHeader();
-                        if (id != -1) {
-                          provider.resetFields();
-                          AppRouter.appRouter.pop();
-                        }
+                        await provider.insertUpdateHeader();
                       },
-                      label: provider.headerId == null ? 'Add' : 'Edit'),
-                  if (provider.headerId != null)
+                      label: provider.incomeHeaderModel.id == null
+                          ? 'Add'
+                          : 'Edit'),
+                  if (provider.incomeHeaderModel.id != null)
                     DeleteButtonWidget(
                         margin: EdgeInsets.only(left: 8.w, right: 8.w),
                         onTap: () {
-                          provider.deleteExpenseHeader();
+                          provider.deleteIncomeHeader();
                         },
                         label: 'Delete'),
                 ],

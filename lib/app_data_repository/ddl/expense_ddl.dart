@@ -1,5 +1,5 @@
 class IncomeHeaderDDL {
-  String tableName = 'header';
+  String tableName = 'wallet_header';
   String idColumn = 'id';
   String typeColumn = 'type';
   String nameColumn = 'name';
@@ -10,7 +10,7 @@ class IncomeHeaderDDL {
 }
 
 class IncomeLinesDDL {
-  String tableName = 'expense_lines';
+  String tableName = 'wallet_lines';
   String idColumn = 'id';
   String subAmountColumn = 'sub_amount';
   String duedateColumn = 'due_date';

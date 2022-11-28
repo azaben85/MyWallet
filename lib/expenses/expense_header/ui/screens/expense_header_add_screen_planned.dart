@@ -16,7 +16,7 @@ class AddExpensePlannedHeader extends StatelessWidget {
                 initialValue: provider.headerName,
                 validation: provider.validateString,
                 onSave: provider.setHeaderName,
-                label: 'Title'),
+                label: 'To'),
             CustomTextField(
                 initialValue: provider.headerDesc,
                 // validation: provider.validateString,

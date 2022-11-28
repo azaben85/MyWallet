@@ -37,11 +37,11 @@ class AddPlannedExpesneHeaderScreen extends StatelessWidget {
           steps: [
             Step(
                 isActive: headerProvider.currentStep >= 0,
-                title: const Text('Header'),
+                title: const Text('To'),
                 content: AddExpensePlannedHeader()),
             Step(
                 isActive: headerProvider.currentStep >= 1,
-                title: const Text('Lines'),
+                title: const Text('Scheduled Expense'),
                 content: const AddPlannedLineScreen()),
           ],
         ),

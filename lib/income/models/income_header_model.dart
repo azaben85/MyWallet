@@ -20,6 +20,16 @@ class IncomeHeaderModel {
     this.flag2,
   });
 
+  resetFields({String? type}) {
+    id = null;
+    this.type = type;
+    name = '';
+    amount = null;
+    desc = '';
+    flag1 = null;
+    flag2 = null;
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       DBHelper.dbHelper.incomeHeaderDDL.typeColumn: type,
@@ -38,7 +48,8 @@ class IncomeHeaderModel {
     type = map[DBHelper.dbHelper.incomeHeaderDDL.typeColumn];
     name = map[DBHelper.dbHelper.incomeHeaderDDL.nameColumn];
     desc = map[DBHelper.dbHelper.incomeHeaderDDL.descColumn];
-    amount = map[DBHelper.dbHelper.incomeHeaderDDL.amountColumn] as num;
+    amount =
+        (map[DBHelper.dbHelper.incomeHeaderDDL.amountColumn] ?? 0.0) as num;
     flag1 = intToBool(map[DBHelper.dbHelper.incomeHeaderDDL.flag1Column] ?? 0);
     flag2 = intToBool(map[DBHelper.dbHelper.incomeHeaderDDL.flag2Column] ?? 0);
   }
