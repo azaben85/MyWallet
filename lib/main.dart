@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_wallet/app_router/app_router.dart';
-import 'package:my_wallet/expenses/data_repository/db_helper.dart';
+import 'package:my_wallet/app_data_repository/db_helper.dart';
 import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';

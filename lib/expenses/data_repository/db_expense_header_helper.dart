@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:my_wallet/expenses/data_repository/db_expense_lines_helper.dart';
-import 'package:my_wallet/expenses/data_repository/db_helper.dart';
-import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
+import 'package:my_wallet/app_data_repository/db_helper.dart';
+import 'package:my_wallet/app_data_repository/ddl/expense_ddl.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
 import 'package:my_wallet/expenses/expense_lines/models/expense_line_model.dart';
 import 'package:sqflite/sqflite.dart';

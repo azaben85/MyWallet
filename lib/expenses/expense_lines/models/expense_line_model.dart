@@ -1,4 +1,4 @@
-import 'package:my_wallet/expenses/data_repository/db_helper.dart';
+import 'package:my_wallet/app_data_repository/db_helper.dart';
 
 class ExpenseLineModel {
   int? id;

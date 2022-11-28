@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:my_wallet/expenses/data_repository/ddl/expense_ddl.dart';
+import 'package:my_wallet/app_data_repository/ddl/expense_ddl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -16,6 +16,9 @@ class DBHelper {
   ExpenseLinesDDL expenseLinesDDL = ExpenseLinesDDL();
   ExpenseHeaderDDL expenseHeaderDDL = ExpenseHeaderDDL();
   ExpenseCategoryDDL expenseCategoryDDL = ExpenseCategoryDDL();
+
+  IncomeHeaderDDL incomeHeaderDDL = IncomeHeaderDDL();
+  IncomeLinesDDL incomeLinesDDL = IncomeLinesDDL();
 
   Future<Database> createDatabaseConnection() async {
     Directory folderDirectory = await getApplicationDocumentsDirectory();
@@ -63,6 +66,27 @@ class DBHelper {
           ${expenseCategoryDDL.idColumn} INTEGER  primary key autoincrement , 
           ${expenseCategoryDDL.nameColumn} TEXT,
           ${expenseCategoryDDL.instantColumn} int
+        )
+      ''');
+
+    createTable(incomeHeaderDDL.tableName, ''' 
+        CREATE TABLE ${incomeHeaderDDL.tableName} (
+          ${incomeHeaderDDL.idColumn} INTEGER  primary key autoincrement , 
+          ${incomeHeaderDDL.typeColumn} TEXT,
+          ${incomeHeaderDDL.nameColumn} TEXT,
+          ${incomeHeaderDDL.descColumn} TEXT,
+          ${incomeHeaderDDL.amountColumn} REAL,
+          ${incomeHeaderDDL.flag1Column} INTEGER,
+          ${incomeHeaderDDL.flag2Column} INTEGER
+        )
+      ''');
+
+    createTable(incomeLinesDDL.tableName, ''' 
+        CREATE TABLE ${incomeLinesDDL.tableName} (
+          ${incomeLinesDDL.idColumn} INTEGER  primary key autoincrement , 
+          ${incomeLinesDDL.descColumn} TEXT,
+          ${incomeLinesDDL.subAmountColumn} TEXT,
+          ${incomeLinesDDL.duedateColumn} TEXT
         )
       ''');
   }

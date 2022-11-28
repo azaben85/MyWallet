@@ -1,3 +1,23 @@
+class IncomeHeaderDDL {
+  String tableName = 'header';
+  String idColumn = 'id';
+  String typeColumn = 'type';
+  String nameColumn = 'name';
+  String descColumn = 'desc';
+  String amountColumn = 'amount';
+  String flag1Column = 'flag1';
+  String flag2Column = 'flag2';
+}
+
+class IncomeLinesDDL {
+  String tableName = 'expense_lines';
+  String idColumn = 'id';
+  String subAmountColumn = 'sub_amount';
+  String duedateColumn = 'due_date';
+  String headerIdColumn = 'header_id';
+  String descColumn = 'desc';
+}
+
 class ExpenseLinesDDL {
   String tableName = 'expense_lines';
   String idColumn = 'id';
