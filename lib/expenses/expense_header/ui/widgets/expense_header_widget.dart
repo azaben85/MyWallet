@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/components/constants_widgets/edit_icon_widget.dart';
-import 'package:my_wallet/expenses/expense_category/ui/widgets/expense_category_widget.dart';
+import 'package:my_wallet/components/wallet_cat_widget.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen.dart';
 import 'package:my_wallet/expenses/expense_lines/ui/screens/expense_line_screen.dart';
@@ -22,7 +22,7 @@ class ExpenseHeaderWidget extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              child: IntExpenseCatWidget(name: expenseHeader.expenseName),
+              child: WalletCatWidget(name: expenseHeader.expenseName),
               onTap: () {
                 Provider.of<ExpenseLineProvider>(context, listen: false)
                     .updateHeaderModel(expenseHeader);
@@ -41,7 +41,7 @@ class ExpenseHeaderWidget extends StatelessWidget {
         ],
       );
     } else {
-      return IntExpenseCatWidget(name: expenseHeader.expenseName);
+      return WalletCatWidget(name: expenseHeader.expenseName);
     }
   }
 }

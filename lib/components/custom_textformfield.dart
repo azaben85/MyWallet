@@ -33,7 +33,11 @@ class CustomTextField extends StatelessWidget {
             return validation == null ? null : validation!(v);
           },
           onSaved: (v) {
-            return onSave == null ? null : onSave!(v);
+            if (onSave == null) {
+              return null;
+            } else {
+              return onSave!(v);
+            }
           },
           decoration: InputDecoration(hintText: label),
         ),

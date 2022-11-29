@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/components/custom_scaffold.dart';
-import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen.dart';
-import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:my_wallet/income/providers/income_header_provider.dart';
 import 'package:my_wallet/income/screens/income_header_add_screen.dart';
 import 'package:my_wallet/income/widgets/income_header_widget.dart';
@@ -21,8 +19,6 @@ class IncomeHeaderScreen extends StatelessWidget {
             backgroundColor: Color.fromRGBO(224, 250, 177, 1),
             onPressed: () {
               iHeaderProvider.resetFields();
-              Provider.of<ExpenseLineProvider>(context, listen: false)
-                  .clearFields();
 
               AppRouter.appRouter.showAlertDialog('Add New', AddIncomeHeader());
             },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/income/data_repository/db_income_header_helper.dart';
+import 'package:my_wallet/income/data_repository/db_income_lines_helper.dart';
 import 'package:my_wallet/income/models/income_header_model.dart';
 
 class IncomeHeaderProvider extends ChangeNotifier {
@@ -21,6 +22,15 @@ class IncomeHeaderProvider extends ChangeNotifier {
   }
 
   IncomeHeaderModel incomeHeaderModel = IncomeHeaderModel();
+  loadDataForUpdate(IncomeHeaderModel headerModel) {
+    incomeHeaderModel.id = headerModel.id;
+    incomeHeaderModel.amount = headerModel.amount;
+    incomeHeaderModel.name = headerModel.name;
+    incomeHeaderModel.desc = headerModel.desc;
+    incomeHeaderModel.flag1 = headerModel.flag1;
+    incomeHeaderModel.flag2 = headerModel.flag2;
+    incomeHeaderModel.type = headerModel.type;
+  }
 
   insertUpdateHeader() async {
     if (incomeHeaderKey.currentState!.validate()) {
@@ -40,9 +50,15 @@ class IncomeHeaderProvider extends ChangeNotifier {
   }
 
   deleteIncomeHeader() async {
+    await IncomeLineDBHelper.dbHelper
+        .deleteIncomeLineByHeaderId(incomeHeaderModel.id ?? -1);
     await IncomeHeaderDBHelper.dbHelper
         .deleteIncomeHeader(incomeHeaderModel.id ?? -1);
+
     resetFields();
+    getIncomeHeaders();
+
+    AppRouter.appRouter.pop();
   }
 
   setName(String name) {

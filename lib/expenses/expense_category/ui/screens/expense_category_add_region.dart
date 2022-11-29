@@ -31,7 +31,7 @@ class AddExpenseCategoryContent extends StatelessWidget {
                   value: provider.instantType ?? false,
                   onChanged: provider.setInstantType),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

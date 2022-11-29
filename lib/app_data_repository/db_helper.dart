@@ -85,8 +85,9 @@ class DBHelper {
         CREATE TABLE ${incomeLinesDDL.tableName} (
           ${incomeLinesDDL.idColumn} INTEGER  primary key autoincrement , 
           ${incomeLinesDDL.descColumn} TEXT,
-          ${incomeLinesDDL.subAmountColumn} TEXT,
-          ${incomeLinesDDL.duedateColumn} TEXT
+          ${incomeLinesDDL.subAmountColumn} REAL,
+          ${incomeLinesDDL.duedateColumn} TEXT,
+          ${incomeLinesDDL.headerIdColumn} INTEGER
         )
       ''');
   }
