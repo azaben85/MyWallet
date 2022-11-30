@@ -7,7 +7,12 @@ enum Icon_Type { expense, saving, income }
 class WalletCatWidget extends StatelessWidget {
   String name;
   Icon_Type? icon_type;
-  WalletCatWidget({super.key, required this.name, this.icon_type});
+  Color? textColor;
+  WalletCatWidget(
+      {super.key,
+      this.textColor = Colors.black,
+      required this.name,
+      this.icon_type});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,7 @@ class WalletCatWidget extends StatelessWidget {
           SizedBox(
             width: 12.w,
           ),
-          Text(name),
+          Text(name, style: TextStyle(color: textColor)),
         ],
       )),
     );

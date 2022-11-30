@@ -8,6 +8,7 @@ import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:my_wallet/income/providers/income_header_provider.dart';
 import 'package:my_wallet/income/providers/income_line_provider.dart';
+import 'package:my_wallet/saving/providers/saving_header_provider.dart';
 import 'package:my_wallet/screens/my_wallet_main_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +52,11 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider<AppConfigProvider>(
         create: (context) {
           return AppConfigProvider();
+        },
+      ),
+      ChangeNotifierProvider<SavingHeaderProvider>(
+        create: (context) {
+          return SavingHeaderProvider();
         },
       ),
     ], child: InitialApp());

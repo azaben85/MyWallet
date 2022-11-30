@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_wallet/components/custom_scaffold.dart';
 import 'package:my_wallet/expenses/expense_category/ui/screens/expense_categories_screen.dart';
 import 'package:my_wallet/income/screens/income_header_screen.dart';
+import 'package:my_wallet/saving/screens/saving_header_screen.dart';
 
 class MyWalletMainScreen extends StatelessWidget {
   const MyWalletMainScreen({super.key});
@@ -9,7 +10,7 @@ class MyWalletMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: 'MyWallet',
+      title: 'My Wallet',
       body: Column(
         children: [
           ElevatedButton(
@@ -30,6 +31,15 @@ class MyWalletMainScreen extends StatelessWidget {
                 ));
               },
               child: const Text('Income')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return const SavingHeaderScreen();
+                  },
+                ));
+              },
+              child: const Text('Saving')),
         ],
       ),
     );

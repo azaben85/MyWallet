@@ -4,7 +4,6 @@ import 'package:my_wallet/components/add_update_widget.dart';
 import 'package:my_wallet/components/custom_datepicker.dart';
 import 'package:my_wallet/components/custom_textformfield.dart';
 import 'package:my_wallet/components/delete_widget.dart';
-import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:my_wallet/helper/util.dart';
 import 'package:my_wallet/income/providers/income_line_provider.dart';
 import 'package:provider/provider.dart';

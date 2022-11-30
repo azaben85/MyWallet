@@ -10,12 +10,15 @@ import 'package:my_wallet/income/providers/income_header_provider.dart';
 import 'package:my_wallet/income/providers/income_line_provider.dart';
 import 'package:my_wallet/income/screens/income_line_screen.dart';
 import 'package:my_wallet/income/screens/income_header_add_screen.dart';
+import 'package:my_wallet/saving/providers/saving_header_provider.dart';
+import 'package:my_wallet/saving/screens/saving_header_add_screen.dart';
+import 'package:my_wallet/saving/screens/saving_line_screen.dart';
 import 'package:provider/provider.dart';
 
-class IncomeHeaderWidget extends StatelessWidget {
+class SavingHeaderWidget extends StatelessWidget {
   IncomeHeaderModel incomeHeader;
   bool allowNavigate;
-  IncomeHeaderWidget(this.incomeHeader, {this.allowNavigate = true});
+  SavingHeaderWidget(this.incomeHeader, {this.allowNavigate = true});
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +28,29 @@ class IncomeHeaderWidget extends StatelessWidget {
           Expanded(
             child: InkWell(
               child: WalletCatWidget(
-                  name: incomeHeader.name!, icon_type: Icon_Type.income),
+                  name: incomeHeader.name!, icon_type: Icon_Type.saving),
               onTap: () {
                 Provider.of<IncomeLineProvider>(context, listen: false)
                     .setIncomeHeader(incomeHeader);
-                AppRouter.appRouter.push(const IncomeLineScreen());
+                AppRouter.appRouter.push(const SavingLineScreen());
               },
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 28.w),
             child: EditIconWidget(onTap: () {
-              Provider.of<IncomeHeaderProvider>(context, listen: false)
+              Provider.of<SavingHeaderProvider>(context, listen: false)
                   .loadDataForUpdate(incomeHeader);
-              AppRouter.appRouter.showAlertDialog('Edit', AddIncomeHeader());
+              AppRouter.appRouter.showAlertDialog('Edit', AddSavingHeader());
             }),
           )
         ],
       );
     } else {
       return WalletCatWidget(
-          name: incomeHeader.name!, icon_type: Icon_Type.income);
+          textColor: Colors.white,
+          name: incomeHeader.name!,
+          icon_type: Icon_Type.saving);
     }
   }
 }

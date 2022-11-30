@@ -28,6 +28,8 @@ class CustomScaffold extends StatelessWidget {
         floatingActionButton: floatingActionButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: AppBar(
+          title:
+              title != null && titleWidget == null ? Text(title ?? '') : null,
           centerTitle: true,
           backgroundColor: Colors.black,
           bottom: CustomBottomAppBar(title: titleWidget ?? Text(title ?? '')),
@@ -39,12 +41,23 @@ class CustomScaffold extends StatelessWidget {
                 child: Center(
                   child: Consumer<AppConfigProvider>(
                       builder: (context, provider, child) {
-                    return CustomDatePicker(
-                        validation: validateDate,
-                        dateInput: provider.globalDateInput,
-                        onSave: provider.setDateValue,
-                        dateFormat: 'MMM, yyyy',
-                        textColor: Colors.white);
+                    return Row(
+                      children: [
+                        InkWell(
+                          child: Icon(Icons.arrow_upward),
+                          onTap: () {
+                            provider.nextMonth();
+                          },
+                        ),
+                        Text(provider.currentMonth!),
+                        InkWell(
+                          child: Icon(Icons.arrow_downward),
+                          onTap: () {
+                            provider.previousMonth();
+                          },
+                        ),
+                      ],
+                    );
                   }),
                 ))
           ],
