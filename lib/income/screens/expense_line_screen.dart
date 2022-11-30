@@ -22,7 +22,7 @@ class IncomeLineScreen extends StatelessWidget {
         titleWidget: IncomeHeaderWidget(provider.incomeHeaderModel!,
             allowNavigate: false),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: const Color.fromRGBO(202, 192, 248, 1),
+            backgroundColor: const Color.fromRGBO(224, 250, 177, 1),
             onPressed: () {
               provider.resetFields();
 

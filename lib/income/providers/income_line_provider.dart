@@ -14,7 +14,7 @@ class IncomeLineProvider extends ChangeNotifier {
 
   getIncomeLines() async {
     allIncomeLines = await IncomeLineDBHelper.dbHelper
-        .getAllIncomeLines(header_id: incomeHeaderModel!.id ?? -1);
+        .getAllIncomeLines(header_id: incomeHeaderModel?.id ?? -1);
 
     notifyListeners();
   }

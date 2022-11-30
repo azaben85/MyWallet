@@ -26,8 +26,8 @@ class WalletCatWidget extends StatelessWidget {
                   : icon_type == Icon_Type.saving
                       ? 'Saving.png'
                       : 'Expenses.png',
-              width: 40.w,
-              height: 40.h),
+              width: 37.w,
+              height: 37.h),
           SizedBox(
             width: 12.w,
           ),

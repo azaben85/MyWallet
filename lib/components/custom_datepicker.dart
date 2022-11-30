@@ -6,8 +6,16 @@ class CustomDatePicker extends StatelessWidget {
   Function? validation;
   Function? onSave;
   TextEditingController? dateInput;
+  String? dateFormat;
+  Color? textColor;
 
-  CustomDatePicker({Key? key, this.validation, this.dateInput, this.onSave})
+  CustomDatePicker(
+      {Key? key,
+      this.dateFormat = 'yyyy-MM-dd',
+      this.validation,
+      this.dateInput,
+      this.onSave,
+      this.textColor = Colors.black})
       : super(key: key);
 
   @override
@@ -24,8 +32,9 @@ class CustomDatePicker extends StatelessWidget {
             return onSave!(v);
           }
         },
+        style: TextStyle(color: textColor),
         decoration: const InputDecoration(
-            icon: Icon(Icons.calendar_today), //icon of text field
+            //   icon: Icon(Icons.calendar_today), //icon of text field
             labelText: "Enter Date" //label text of field
             ),
         readOnly: true,
@@ -39,7 +48,7 @@ class CustomDatePicker extends StatelessWidget {
               lastDate: DateTime(2200));
 
           if (pickedDate != null) {
-            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+            String formattedDate = DateFormat(dateFormat).format(pickedDate);
             onSave!(formattedDate);
           } else {}
         },
@@ -50,11 +59,19 @@ class CustomDatePicker extends StatelessWidget {
       validator: (v) {
         return validation == null ? null : validation!(v);
       },
+      onSaved: (v) {
+        if (onSave == null) {
+          return null;
+        } else {
+          return onSave!(v);
+        }
+      },
       controller: dateInput,
+      style: TextStyle(color: textColor),
       decoration: const InputDecoration(
-          icon: Icon(Icons.calendar_today), //icon of text field
-          labelText: "Enter Date" //label text of field
-          ),
+        icon: Icon(Icons.calendar_today), //icon of text field
+        //  labelText: "Enter Date" //label text of field
+      ),
       readOnly: true,
       //set it true, so that user will not able to edit text
       onTap: () async {
@@ -66,7 +83,7 @@ class CustomDatePicker extends StatelessWidget {
             lastDate: DateTime(2200));
 
         if (pickedDate != null) {
-          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          String formattedDate = DateFormat(dateFormat).format(pickedDate);
           dateInput!.text = formattedDate;
         } else {}
       },

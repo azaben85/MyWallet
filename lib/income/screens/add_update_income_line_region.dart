@@ -38,7 +38,7 @@ class AddUpdateIncomeLineScreen extends StatelessWidget {
                     onSave: provider.setAmount,
                     label: 'Amount',
                     validation: validateAmount),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(

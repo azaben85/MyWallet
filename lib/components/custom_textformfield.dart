@@ -27,7 +27,8 @@ class CustomTextField extends StatelessWidget {
         margin: const EdgeInsets.only(right: 2, left: 2),
         child: TextFormField(
           keyboardType: textInputType!,
-          initialValue: initialValue,
+          initialValue:
+              (initialValue ?? '') == 'null' ? '' : initialValue ?? '',
           obscureText: isPassowrd,
           validator: (v) {
             return validation == null ? null : validation!(v);
