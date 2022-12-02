@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_provider/app_config_provider.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_header_helper.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
 import 'package:my_wallet/expenses/expense_header/models/expense_header_model.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseHeaderProvider extends ChangeNotifier {
   ExpenseHeaderProvider() {
@@ -12,8 +14,8 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   List<ExpenseHeaderModel> allExpenseHeader = [];
 
   getExpenseHeader() async {
-    allExpenseHeader = await ExpHeaderDBHelper.dbHelper
-        .getAllExpHeaders(expCategoryId: expCategory?.id ?? -1);
+    allExpenseHeader = await ExpHeaderDBHelper.dbHelper.getAllExpHeaders(
+        expCategoryId: expCategory?.id ?? -1, month: monthDate);
 
     notifyListeners();
   }
@@ -24,6 +26,12 @@ class ExpenseHeaderProvider extends ChangeNotifier {
   bool? inBank;
   int? categoryId;
   int? headerId;
+
+  String? monthDate = DateFormat(dateFormat).format(DateTime.now());
+  setMonthDate(String monthDate) async {
+    this.monthDate = monthDate;
+    await getExpenseHeader();
+  }
 
   updateCategoryModel(ExpenseCategoryModel expCategory) {
     this.expCategory = expCategory;

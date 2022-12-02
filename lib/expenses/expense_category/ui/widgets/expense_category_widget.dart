@@ -11,8 +11,10 @@ import 'package:provider/provider.dart';
 
 class ExpenseCategoryWidget extends StatelessWidget {
   ExpenseCategoryModel expenseCategory;
+  double? amount;
   bool allowNavigate;
-  ExpenseCategoryWidget(this.expenseCategory, {this.allowNavigate = true});
+  ExpenseCategoryWidget(this.expenseCategory,
+      {this.allowNavigate = true, this.amount});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,10 @@ class ExpenseCategoryWidget extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              child: WalletCatWidget(name: expenseCategory.name!),
+              child: WalletCatWidget(
+                name: expenseCategory.name!,
+                amount: expenseCategory.total_amount!,
+              ),
               onTap: () {
                 Provider.of<ExpenseHeaderProvider>(context, listen: false)
                     .updateCategoryModel(expenseCategory);
@@ -45,7 +50,10 @@ class ExpenseCategoryWidget extends StatelessWidget {
         ],
       );
     } else {
-      return WalletCatWidget(name: expenseCategory.name!);
+      return WalletCatWidget(
+        name: expenseCategory.name!,
+        amount: expenseCategory.total_amount!,
+      );
     }
   }
 }

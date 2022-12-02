@@ -12,9 +12,11 @@ class ExpenseHeaderModel {
   String startDate;
   String endDate;
   int categoryId;
+  double? total_amount;
   List<ExpenseLineModel>? expenseLinesModelList;
   ExpenseHeaderModel({
     this.id,
+    this.total_amount,
     required this.expenseName,
     this.expenseDesc = '',
     required this.amount,
@@ -52,6 +54,7 @@ class ExpenseHeaderModel {
             map[DBHelper.dbHelper.expenseHeaderDDL.startDateColumn] as String,
         endDate:
             map[DBHelper.dbHelper.expenseHeaderDDL.endDateColumn] as String,
+        total_amount: map['total_amount'] ?? 0.0,
         categoryId:
             map[DBHelper.dbHelper.expenseHeaderDDL.categoryIdColumn] as int);
   }

@@ -18,7 +18,7 @@ class ExpenseHeaderScreen extends StatelessWidget {
         builder: (context, eHeaderProvider, child) {
       return CustomScaffold(
         title: eHeaderProvider.expCategory!.name!,
-        titleWidget: ExpenseCategoryWidget(eHeaderProvider.expCategory!,
+        bottom: ExpenseCategoryWidget(eHeaderProvider.expCategory!,
             allowNavigate: false),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Color.fromRGBO(202, 192, 248, 1),

@@ -17,7 +17,7 @@ class SavingLineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<IncomeLineProvider>(builder: (context, provider, child) {
       return CustomScaffold(
-        titleWidget: SavingHeaderWidget(provider.incomeHeaderModel!,
+        bottom: SavingHeaderWidget(provider.incomeHeaderModel!,
             allowNavigate: false),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Color.fromRGBO(244, 207, 166, 1),

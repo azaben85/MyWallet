@@ -8,10 +8,12 @@ class WalletCatWidget extends StatelessWidget {
   String name;
   Icon_Type? icon_type;
   Color? textColor;
+  double? amount;
   WalletCatWidget(
       {super.key,
       this.textColor = Colors.black,
       required this.name,
+      this.amount,
       this.icon_type});
 
   @override
@@ -25,20 +27,53 @@ class WalletCatWidget extends StatelessWidget {
       child: Center(
           child: Row(
         children: [
-          ImageAsset(
-              icon_type == Icon_Type.income
-                  ? 'Income.png'
-                  : icon_type == Icon_Type.saving
-                      ? 'Saving.png'
-                      : 'Expenses.png',
-              width: 37.w,
-              height: 37.h),
+          WalletIcon(icon_type: icon_type),
           SizedBox(
             width: 12.w,
           ),
-          Text(name, style: TextStyle(color: textColor)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(name,
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: textColor)),
+                // if (amount != null)
+                //   SizedBox(
+                //     height: 12.h,
+                //   ),
+                if (amount != null)
+                  Text('Total $amount',
+                      style: TextStyle(fontSize: 14, color: textColor)),
+              ],
+            ),
+          ),
         ],
       )),
     );
+  }
+}
+
+class WalletIcon extends StatelessWidget {
+  const WalletIcon({
+    super.key,
+    required this.icon_type,
+  });
+
+  final Icon_Type? icon_type;
+
+  @override
+  Widget build(BuildContext context) {
+    return ImageAsset(
+        icon_type == Icon_Type.income
+            ? 'Income.png'
+            : icon_type == Icon_Type.saving
+                ? 'Saving.png'
+                : 'Expenses.png',
+        width: 37.w,
+        height: 37.h);
   }
 }

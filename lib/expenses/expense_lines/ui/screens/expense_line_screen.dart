@@ -17,8 +17,8 @@ class ExpesnseLineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExpenseLineProvider>(builder: (context, provider, child) {
       return CustomScaffold(
-        titleWidget:
-            ExpenseHeaderWidget(provider.headerModel!, allowNavigate: false),
+        bottom: ExpenseHeaderWidget(provider.headerModel!,
+            allowNavigate: false, textColor: Colors.white),
         floatingActionButton: FloatingActionButton(
             backgroundColor: const Color.fromRGBO(202, 192, 248, 1),
             onPressed: () {
@@ -41,7 +41,9 @@ class ExpesnseLineScreen extends StatelessWidget {
                     children: [
                       RowWidget(label: 'Description', isHeader: true),
                       RowWidget(label: 'Due Date', isHeader: true),
-                      RowWidget(label: 'Amount', isHeader: true),
+                      RowWidget(
+                          label: 'Amount (${provider.total_amount})',
+                          isHeader: true),
                     ],
                   ),
                 ),

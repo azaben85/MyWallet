@@ -15,5 +15,5 @@ class CustomBottomAppBar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size(390.w, 230.h);
+  Size get preferredSize => Size(390.w, 180.h);
 }

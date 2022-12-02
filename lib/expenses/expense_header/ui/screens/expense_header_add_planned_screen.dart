@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_wallet/components/custom_scaffold.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/expense_header_add_screen_planned.dart';
 import 'package:my_wallet/expenses/expense_header/ui/screens/add_planned_line_screen.dart';
+import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,11 @@ class AddPlannedExpesneHeaderScreen extends StatelessWidget {
             } else {
               int id = await headerProvider.insertUpdateExpenseHeader();
               await lineProvider.insertExpenseLines(id);
+
+              Provider.of<ExpenseCategoryProvider>(context, listen: false)
+                  .getExpenseCategories();
+              Provider.of<ExpenseHeaderProvider>(context, listen: false)
+                  .getExpenseHeader();
             }
           },
           onStepCancel: () {

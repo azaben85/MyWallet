@@ -5,6 +5,8 @@ import 'package:my_wallet/app_provider/app_config_provider.dart';
 import 'package:my_wallet/components/custom_appbar.dart';
 import 'package:my_wallet/components/custom_appbar_bottom.dart';
 import 'package:my_wallet/components/custom_datepicker.dart';
+import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
+import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/helper/util.dart';
 import 'package:my_wallet/income/providers/income_line_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,13 +14,13 @@ import 'package:provider/provider.dart';
 class CustomScaffold extends StatelessWidget {
   Widget? floatingActionButton;
   Widget? body;
-  Widget? titleWidget;
+  Widget? bottom;
   String? title;
   CustomScaffold({
     this.floatingActionButton,
     this.body,
     this.title,
-    this.titleWidget,
+    this.bottom,
     super.key,
   });
 
@@ -28,11 +30,10 @@ class CustomScaffold extends StatelessWidget {
         floatingActionButton: floatingActionButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: AppBar(
-          title:
-              title != null && titleWidget == null ? Text(title ?? '') : null,
+          title: title != null && bottom == null ? Text(title ?? '') : null,
           centerTitle: true,
           backgroundColor: Colors.black,
-          bottom: CustomBottomAppBar(title: titleWidget ?? Text(title ?? '')),
+          bottom: CustomBottomAppBar(title: bottom ?? Text(title ?? '')),
           actions: [
             Container(
                 height: 52.h,
@@ -44,16 +45,28 @@ class CustomScaffold extends StatelessWidget {
                     return Row(
                       children: [
                         InkWell(
-                          child: Icon(Icons.arrow_upward),
+                          child: Icon(Icons.arrow_downward),
                           onTap: () {
-                            provider.nextMonth();
+                            provider.previousMonth();
+                            Provider.of<ExpenseCategoryProvider>(context,
+                                    listen: false)
+                                .setMonthDate(provider.currentMonth!);
+                            Provider.of<ExpenseHeaderProvider>(context,
+                                    listen: false)
+                                .setMonthDate(provider.currentMonth!);
                           },
                         ),
                         Text(provider.currentMonth!),
                         InkWell(
-                          child: Icon(Icons.arrow_downward),
+                          child: Icon(Icons.arrow_upward),
                           onTap: () {
-                            provider.previousMonth();
+                            provider.nextMonth();
+                            Provider.of<ExpenseCategoryProvider>(context,
+                                    listen: false)
+                                .setMonthDate(provider.currentMonth!);
+                            Provider.of<ExpenseHeaderProvider>(context,
+                                    listen: false)
+                                .setMonthDate(provider.currentMonth!);
                           },
                         ),
                       ],

@@ -12,8 +12,13 @@ import 'package:provider/provider.dart';
 
 class ExpenseHeaderWidget extends StatelessWidget {
   ExpenseHeaderModel expenseHeader;
+  Color? textColor;
   bool allowNavigate;
-  ExpenseHeaderWidget(this.expenseHeader, {this.allowNavigate = true});
+  ExpenseHeaderWidget(
+    this.expenseHeader, {
+    this.allowNavigate = true,
+    this.textColor = Colors.black,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,10 @@ class ExpenseHeaderWidget extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              child: WalletCatWidget(name: expenseHeader.expenseName),
+              child: WalletCatWidget(
+                  textColor: textColor,
+                  name: expenseHeader.expenseName,
+                  amount: expenseHeader.total_amount),
               onTap: () {
                 Provider.of<ExpenseLineProvider>(context, listen: false)
                     .updateHeaderModel(expenseHeader);
@@ -41,7 +49,11 @@ class ExpenseHeaderWidget extends StatelessWidget {
         ],
       );
     } else {
-      return WalletCatWidget(name: expenseHeader.expenseName);
+      return WalletCatWidget(
+        name: expenseHeader.expenseName,
+        amount: expenseHeader.total_amount,
+        textColor: textColor,
+      );
     }
   }
 }

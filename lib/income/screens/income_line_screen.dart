@@ -19,7 +19,7 @@ class IncomeLineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<IncomeLineProvider>(builder: (context, provider, child) {
       return CustomScaffold(
-        titleWidget: IncomeHeaderWidget(provider.incomeHeaderModel!,
+        bottom: IncomeHeaderWidget(provider.incomeHeaderModel!,
             allowNavigate: false),
         floatingActionButton: FloatingActionButton(
             backgroundColor: const Color.fromRGBO(224, 250, 177, 1),

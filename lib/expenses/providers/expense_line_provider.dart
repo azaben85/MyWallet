@@ -21,6 +21,8 @@ class ExpenseLineProvider extends ChangeNotifier {
 
   int? headerId;
   int? lineId;
+  double? total_amount = 0;
+
   ExpenseHeaderModel? headerModel;
 
   clearFields() {
@@ -76,7 +78,8 @@ class ExpenseLineProvider extends ChangeNotifier {
   getExpenseLine() async {
     allExpenseLines = await ExpLinesDBHelper.dbHelper
         .getAllExpLines(expHeaderId: headerModel?.id ?? -1);
-
+    total_amount = await ExpLinesDBHelper.dbHelper
+        .getExpenseTotal(expHeaderId: headerModel?.id ?? -1);
     notifyListeners();
   }
 

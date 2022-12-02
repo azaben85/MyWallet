@@ -4,6 +4,8 @@ import 'package:my_wallet/components/add_update_widget.dart';
 import 'package:my_wallet/components/custom_datepicker.dart';
 import 'package:my_wallet/components/custom_textformfield.dart';
 import 'package:my_wallet/components/delete_widget.dart';
+import 'package:my_wallet/expenses/providers/expense_category_provider.dart';
+import 'package:my_wallet/expenses/providers/expense_header_provider.dart';
 import 'package:my_wallet/expenses/providers/expense_line_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +46,13 @@ class AddUpdateLineScreen extends StatelessWidget {
                         margin: EdgeInsets.only(left: 8.w, right: 8.w),
                         onTap: () {
                           provider.insertExpenseLine();
+
+                          Provider.of<ExpenseCategoryProvider>(context,
+                                  listen: false)
+                              .getExpenseCategories();
+                          Provider.of<ExpenseHeaderProvider>(context,
+                                  listen: false)
+                              .getExpenseHeader();
                         },
                         label: provider.lineId == null ? 'Add' : 'Edit'),
                     if (provider.lineId != null)

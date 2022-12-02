@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_wallet/app_provider/app_config_provider.dart';
 import 'package:my_wallet/app_router/app_router.dart';
 import 'package:my_wallet/expenses/data_repository/db_expense_category_helper.dart';
+import 'package:intl/intl.dart';
+import 'package:my_wallet/expenses/data_repository/db_expense_lines_helper.dart';
 import 'package:my_wallet/expenses/expense_category/models/expense_category_model.dart';
 
 class ExpenseCategoryProvider extends ChangeNotifier {
@@ -14,6 +17,12 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   bool? instantType = false;
   int? catId;
   ExpenseCategoryModel? expCategory;
+
+  String? monthDate = DateFormat(dateFormat).format(DateTime.now());
+  setMonthDate(String monthDate) async {
+    this.monthDate = monthDate;
+    await getExpenseCategories();
+  }
 
   setCategoryName(String categoryName) {
     this.categoryName = categoryName;
@@ -39,8 +48,8 @@ class ExpenseCategoryProvider extends ChangeNotifier {
   }
 
   getExpenseCategories() async {
-    allExpenseCategories =
-        await ExpCatDBHelper.expCatDBHelper.getAllExpCategories();
+    allExpenseCategories = await ExpCatDBHelper.expCatDBHelper
+        .getAllExpCategories(month: monthDate);
 
     notifyListeners();
   }

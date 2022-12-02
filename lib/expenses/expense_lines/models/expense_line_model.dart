@@ -2,7 +2,7 @@ import 'package:my_wallet/app_data_repository/db_helper.dart';
 
 class ExpenseLineModel {
   int? id;
-  num subAmount;
+  double subAmount;
   String duedate;
   String? description;
   int? headerId;
@@ -26,7 +26,7 @@ class ExpenseLineModel {
   factory ExpenseLineModel.fromMap(Map<String, dynamic> map) {
     return ExpenseLineModel(
       id: map[DBHelper.dbHelper.expenseLinesDDL.idColumn] as int,
-      subAmount: map[DBHelper.dbHelper.expenseLinesDDL.subAmountColumn] as num,
+      subAmount: map[DBHelper.dbHelper.expenseLinesDDL.subAmountColumn] ?? 0.0,
       duedate: map[DBHelper.dbHelper.expenseLinesDDL.duedateColumn] as String,
       description: (map[DBHelper.dbHelper.expenseLinesDDL.descriptionColumn] ??
           '') as String,

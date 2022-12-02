@@ -7,13 +7,14 @@ class ExpenseCategoryModel {
   int? id;
   String? name;
   bool? instant;
+  double? total_amount;
   List<ExpenseHeaderModel>? expenseHeaderList;
-  ExpenseCategoryModel({
-    this.id,
-    this.name,
-    this.instant,
-    this.expenseHeaderList,
-  });
+  ExpenseCategoryModel(
+      {this.id,
+      this.name,
+      this.instant,
+      this.expenseHeaderList,
+      this.total_amount});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -28,5 +29,6 @@ class ExpenseCategoryModel {
     name = map[DBHelper.dbHelper.expenseCategoryDDL.nameColumn];
     instant =
         intToBool(map[DBHelper.dbHelper.expenseCategoryDDL.instantColumn] ?? 0);
+    total_amount = map['total_amount'] ?? 0.0;
   }
 }
